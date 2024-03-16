@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">NewMovShow</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <!-- Media List -->
+    <plurals name="next_episode_in_days">
+        <item quantity="one">Next episode in %d day</item>
+        <item quantity="other">Next episode in %d days</item>
+    </plurals>
+    <string name="media_list_detail" formatted="false">Status: %1s\nRating: %.1f</string>
+
+
+
+    <!-- Media Details -->
+    <string name="summary">Summary</string>
+    <string name="latest_episode">Latest episode</string>
+    <string name="next_episode">Next episode</string>
+    <string name="details_text">Details</string>
+    <string name="main_detail_text" formatted="false">Status: %1s\nRating: %.1f</string>
+    <string name="episode_detail" formatted="false">%s</string>
+    <string name="season_number">Season %d</string>
+    <string name="episode_date">%d-%d-%d</string>
+    <string name="episode_any_summary">No summary found for this episode</string>
+    <string name="no_media">No media</string>
+    <string name="next_episode_detail">%s (%s)</string>
+    <string name="trailer">Trailer</string>
+    <string name="trailer_play">Play trailer</string>
+
+
+    <!-- Errors -->
+    <string name="error_default">An Error Occurred</string>
+    <string name="error_no_network">No Network</string>
+    <string name="error_http_exception">Http Exception</string>
+    <string name="error_success">Success !</string>
+    <string name="error_no_content">Any content</string>
+    <string name="error_bad_request">Bad request</string>
+    <string name="error_unauthorized">Unauthorized</string>
+    <string name="error_forbidden">No Network</string>
+    <string name="error_payment_required">Need Payment</string>
+    <string name="error_no_found">No Found</string>
+    <string name="error_time_out">Time out</string>
+    <string name="no_video_is_available_at_the_moment">No video is available at the moment</string>
+</resources>
