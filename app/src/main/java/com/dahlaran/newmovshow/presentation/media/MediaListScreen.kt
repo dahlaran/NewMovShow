@@ -17,7 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.dahlaran.newmovshow.common.domain.FrontSimpleCallbackImpl
-import com.dahlaran.newmovshow.domain.viewmodel.MediaListViewModel
+import com.dahlaran.newmovshow.domain.viewmodel.MainState
+import com.dahlaran.newmovshow.domain.viewmodel.SearchMediaListViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -25,16 +26,17 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 @Composable
 fun MediaListScreen(
     navigationController: NavHostController,
-    viewModel: MediaListViewModel = hiltViewModel(),
+    mainState: MainState,
+    searchViewModel: SearchMediaListViewModel = hiltViewModel(),
 ) {
-    val state = viewModel.state
+    val state = searchViewModel.state
     val context = LocalContext.current
 
-    fun refresh() = viewModel.getMedias(0, FrontSimpleCallbackImpl(context))
-    fun onChange(search: String) = viewModel.getSearchMediaByTitle(search, FrontSimpleCallbackImpl(context))
+    fun refresh() = searchViewModel.getMedias(0, FrontSimpleCallbackImpl(context))
+    fun onChange(search: String) = searchViewModel.getSearchMediaByTitle(search, FrontSimpleCallbackImpl(context))
 
     val swipeRefreshState =
-        rememberSwipeRefreshState(isRefreshing = viewModel.state.isLoading)
+        rememberSwipeRefreshState(isRefreshing = searchViewModel.state.isLoading)
     Column(
         modifier = Modifier.fillMaxSize()
     ) {

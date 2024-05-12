@@ -17,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.dahlaran.newmovshow.domain.model.Media
 import com.dahlaran.newmovshow.presentation.Route
+import timber.log.Timber
 
 @Composable
 fun MediaItem(
@@ -28,6 +29,7 @@ fun MediaItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable {
+                Timber.e("ONclick ${media.id}")
                 navigationController.navigate("${Route.MEDIA_DETAIL_SCREEN}/${media.id}")
             }
             .padding(8.dp),

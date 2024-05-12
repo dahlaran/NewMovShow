@@ -23,9 +23,10 @@ interface MediaRepository {
      * Search a list of media by title
      *
      * @param title the title to search
+     * @param page the page to get
      * @return a flow that will emit a DataState that contains a list of medias
      */
-    fun searchMediaByTitle(title: String): Flow<DataState<List<Media>>>
+    fun searchMediaByTitle(title: String, page: Int): Flow<DataState<List<Media>>>
 
     /**
      * Search a media by id

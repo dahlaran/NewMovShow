@@ -44,7 +44,7 @@ class TVMazeRepository @Inject constructor(private val service: TVMazeApiService
         }
     }
 
-    override fun searchMediaByTitle(title: String): Flow<DataState<List<Media>>> {
+    override fun searchMediaByTitle(title: String, page: Int): Flow<DataState<List<Media>>> {
         return flow {
             emit(DataState.Loading(true))
             try {

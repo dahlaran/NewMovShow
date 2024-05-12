@@ -15,9 +15,10 @@ class SearchMediaByTitle @Inject constructor(private val mediaRepository: MediaR
      * Search medias by title from the repository
      *
      * @param mediaTitle the title of the media to search
+     * @param page the page to get
      * @return a flow of DataState<List<Media>>
      */
-    fun invoke(mediaTitle: String): Flow<DataState<List<Media>>> {
-        return mediaRepository.searchMediaByTitle(mediaTitle)
+    fun invoke(mediaTitle: String, page: Int): Flow<DataState<List<Media>>> {
+        return mediaRepository.searchMediaByTitle(mediaTitle, page)
     }
 }
