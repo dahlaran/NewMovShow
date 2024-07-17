@@ -1,6 +1,7 @@
 package com.dahlaran.newmovshow.domain.viewmodel
 
 import com.dahlaran.newmovshow.domain.model.Media
+import com.dahlaran.newmovshow.presentation.Route
 
 /**
  * It is used to update the UI when the MainState is updated

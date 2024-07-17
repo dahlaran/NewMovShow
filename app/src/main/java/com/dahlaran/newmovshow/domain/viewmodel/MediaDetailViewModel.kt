@@ -14,7 +14,7 @@ class MediaDetailViewModel @Inject constructor(val detailUsesCase: GetMediaUseCa
     var state by mutableStateOf(MediaDetailState())
 
     fun getMediaDetail(mediaId: String) {
-        launchUsesCase(detailUsesCase.invoke(mediaId), null,
+        launchUsesCase(detailUsesCase.invoke(mediaId),
             onLoading = {
                 state = state.copy(isLoading = it)
             },

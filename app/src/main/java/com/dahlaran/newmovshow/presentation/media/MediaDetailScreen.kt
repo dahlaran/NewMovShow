@@ -157,7 +157,7 @@ fun PosterSection(media: Media?) {
                 contentAlignment = Alignment.Center
             ) {
                 AsyncImage(
-                    model = media?.image, contentDescription = "${media?.name} image"
+                    model = media?.image, contentDescription = "${media?.title} image"
                 )
             }
         }
@@ -170,7 +170,7 @@ fun InfoSection(media: Media?) {
         Spacer(modifier = Modifier.height(260.dp))
 
         Text(
-            text = media?.name ?: "",
+            text = media?.title ?: "",
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.SemiBold,
             fontSize = 19.sp

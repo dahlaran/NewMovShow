@@ -17,7 +17,6 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun <T> launchUsesCase(
         functionToLaunch: Flow<DataState<T>>,
-        callback: FrontSimpleCallback?,
         onLoading: ((Boolean) -> Unit)? = null,
         onSuccess: ((T) -> Unit)? = null,
         onError: ((Error) -> Unit)? = null,
@@ -34,14 +33,12 @@ abstract class BaseViewModel : ViewModel() {
                 is DataState.Success -> {
                     runOnUIThread {
                         onSuccess?.invoke(dataState.data)
-                        callback?.onSuccess()
                     }
                 }
 
                 is DataState.Error -> {
                     runOnUIThread {
                         onError?.invoke(dataState.error)
-                        callback?.onFailed(dataState.error)
                     }
                 }
             }
