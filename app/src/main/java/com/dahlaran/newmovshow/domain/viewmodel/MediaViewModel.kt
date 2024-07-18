@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.StateFlow
 
 
 interface MediaViewModel {
-    val mainState: StateFlow<MainState>
+    val state: StateFlow<MediaListState>
     fun onEvent(event: MainEvents)
 }

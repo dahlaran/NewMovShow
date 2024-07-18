@@ -22,7 +22,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.dahlaran.newmovshow.common.data.MainEvents
-import com.dahlaran.newmovshow.domain.viewmodel.MainState
 import com.dahlaran.newmovshow.presentation.Route
 import com.dahlaran.newmovshow.presentation.media.MediaListScreen
 

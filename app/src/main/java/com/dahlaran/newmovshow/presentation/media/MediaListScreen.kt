@@ -23,13 +23,10 @@ import androidx.navigation.compose.rememberNavController
 import com.dahlaran.newmovshow.common.data.Constants
 import com.dahlaran.newmovshow.common.data.MainEvents
 import com.dahlaran.newmovshow.common.domain.FrontSimpleCallback
-import com.dahlaran.newmovshow.common.domain.FrontSimpleCallbackImpl
 import com.dahlaran.newmovshow.domain.model.Media
 import com.dahlaran.newmovshow.domain.viewmodel.MediaViewModel
 import com.dahlaran.newmovshow.domain.viewmodel.MediaViewModelImpl
 import com.dahlaran.newmovshow.domain.viewmodel.MediaListState
-import com.dahlaran.newmovshow.domain.viewmodel.SearchMediaListViewModel
-import com.dahlaran.newmovshow.domain.viewmodel.SearchMediaListViewModelImpl
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,29 +37,27 @@ import kotlinx.coroutines.flow.asStateFlow
 @Composable
 fun MediaListScreen(
     navigationController: NavHostController,
-    mainViewModel: MediaViewModel = hiltViewModel<MediaViewModelImpl>(),
-    searchViewModel: SearchMediaListViewModel = hiltViewModel<SearchMediaListViewModelImpl>(),
+    mediaViewModel: MediaViewModel = hiltViewModel<MediaViewModelImpl>(),
 ) {
-    val mainState = mainViewModel.mainState.collectAsState().value
+    val state = mediaViewModel.state.collectAsState().value
 
-    val state = searchViewModel.state
     val context = LocalContext.current
 
-    fun refresh() = mainViewModel.onEvent(MainEvents.Refresh(Constants.GET_MOVIES))
+    fun refresh() = mediaViewModel.onEvent(MainEvents.Refresh(Constants.GET_MOVIES))
     fun onChange(search: String) =
-        searchViewModel.getSearchMediaByTitle(search, FrontSimpleCallbackImpl(context))
+        mediaViewModel.onEvent(MainEvents.Search(search))
 
     val swipeRefreshState =
-        rememberSwipeRefreshState(isRefreshing = searchViewModel.state.collectAsState().value.isLoading)
+        rememberSwipeRefreshState(isRefreshing = mediaViewModel.state.collectAsState().value.isLoading)
 
     LaunchedEffect(Unit) {
-        mainViewModel.onEvent(MainEvents.Refresh(""))
+        mediaViewModel.onEvent(MainEvents.Refresh(""))
     }
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         OutlinedTextField(
-            value = state.collectAsState().value.searchQuery,
+            value = state.searchQuery,
             onValueChange = {
                 Toast.makeText(context, "Search: $it", Toast.LENGTH_SHORT).show()
                 onChange(it)
@@ -85,15 +80,15 @@ fun MediaListScreen(
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(mainState.medias.size) { i ->
+                items(state.medias.size) { i ->
                     MediaItem(
                         navigationController,
-                        media = mainState.medias[i],
+                        media = state.medias[i],
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp)
                     )
-                    if (i < mainState.medias.size) {
+                    if (i < state.medias.size) {
                         HorizontalDivider(
                             modifier = Modifier.padding(
                                 horizontal = 16.dp
@@ -110,10 +105,10 @@ fun MediaListScreen(
 @Preview
 @Composable
 fun MediaListScreenPreview() {
-    val viewModelMock = object : SearchMediaListViewModel {
+    val viewModelMock = object : MediaViewModel {
         override val state: StateFlow<MediaListState> = MutableStateFlow(
             MediaListState(
-                searchedMedias = listOf(
+                medias = listOf(
                     Media(
                         id = "1",
                         genres = listOf("Action", "Adventure"),
@@ -135,13 +130,13 @@ fun MediaListScreenPreview() {
             )
         ).asStateFlow()
 
-        override fun getSearchMediaByTitle(title: String, callback: FrontSimpleCallback?) {
-           // Do Nothing
+        override fun onEvent(event: MainEvents) {
+            // Do Nothing
         }
     }
 
     MediaListScreen(
         navigationController = rememberNavController(),
-        searchViewModel = viewModelMock
+        mediaViewModel = viewModelMock
     )
 }

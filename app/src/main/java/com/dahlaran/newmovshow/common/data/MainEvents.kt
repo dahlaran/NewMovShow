@@ -5,5 +5,5 @@ package com.dahlaran.newmovshow.common.data
  */
 sealed class MainEvents {
     data class Refresh(val text: String) : MainEvents()
-    data class OnPaginate(val type: String) : MainEvents()
+    data class Search(val title: String) : MainEvents()
 }

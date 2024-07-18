@@ -9,7 +9,7 @@ import javax.inject.Inject
 /**
  * SearchMediaByTitle is a use case that can be used to search medias by title
  */
-class SearchMediaByTitle @Inject constructor(private val mediaRepository: MediaRepository) {
+class SearchMediaByTitleUseCase @Inject constructor(private val mediaRepository: MediaRepository) {
 
     /**
      * Search medias by title from the repository
