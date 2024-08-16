@@ -55,8 +55,14 @@ fun Navigation() {
             arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) {
             val id: String = it.arguments?.getString("id") ?: "0"
-            mediaDetailsViewModel.getMediaDetail(mediaId = id)
-            MediaDetailScreen(mediaDetailScreenState = mediaDetailsScreenState)
+
+            if (mediaDetailsViewModel.state.media?.id != id) {
+                mediaDetailsViewModel.getMediaDetail(mediaId = id)
+            }
+            MediaDetailScreen(
+                mediaDetailScreenState = mediaDetailsScreenState,
+                navController = navController
+            )
         }
     }
 }

@@ -28,7 +28,6 @@ fun MediaItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable {
-                Timber.d("On Click ${media.id}")
                 navigationController.navigate("${Route.MEDIA_DETAIL_SCREEN}/${media.id}")
             }
             .padding(8.dp),

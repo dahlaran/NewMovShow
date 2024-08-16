@@ -59,7 +59,6 @@ fun MediaListScreen(
         OutlinedTextField(
             value = state.searchQuery,
             onValueChange = {
-                Toast.makeText(context, "Search: $it", Toast.LENGTH_SHORT).show()
                 onChange(it)
             },
             modifier = Modifier
