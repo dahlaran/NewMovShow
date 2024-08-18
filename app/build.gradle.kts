@@ -1,14 +1,14 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
     namespace = "com.dahlaran.newmovshow"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.dahlaran.newmovshow"
@@ -91,10 +91,7 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.androidx.navigation.compose)
     implementation(libs.accompanist.swiperefresh)
-
-    // Compose Nav Destinations
-    //implementation('io.github.raamcosta.compose-destinations:core:1.1.2-beta')
-    //ksp('io.github.raamcosta.compose-destinations:ksp:1.1.2-beta')
+    implementation(libs.kotlinx.serialization.json)
 
     // Hilt dependencies
     implementation(libs.hilt.android)

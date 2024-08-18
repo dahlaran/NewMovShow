@@ -9,16 +9,17 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import com.dahlaran.newmovshow.domain.viewmodel.MediaDetailViewModel
 import com.dahlaran.newmovshow.presentation.home.HomeScreen
 import com.dahlaran.newmovshow.presentation.media.MediaDetailScreen
 import com.dahlaran.newmovshow.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -41,23 +42,22 @@ class MainActivity : ComponentActivity() {
 fun Navigation() {
     val navController = rememberNavController()
 
-    val mediaDetailsViewModel = hiltViewModel<MediaDetailViewModel>()
-    val mediaDetailsScreenState = mediaDetailsViewModel.state
     NavHost(
-        navController = navController, startDestination = Route.MEDIA_LIST_SCREEN
+        navController = navController, startDestination = HomeScreen
     ) {
-        composable(Route.MEDIA_LIST_SCREEN) {
+        composable<HomeScreen> {
             HomeScreen(navController = navController)
         }
+        composable<DetailScreen> {
+            val mediaDetailsViewModel = hiltViewModel<MediaDetailViewModel>()
+            val mediaDetailsScreenState = mediaDetailsViewModel.state
+            val id: String = it.toRoute<DetailScreen>().id
 
-        composable(
-            "${Route.MEDIA_DETAIL_SCREEN}/{id}",
-            arguments = listOf(navArgument("id") { type = NavType.StringType })
-        ) {
-            val id: String = it.arguments?.getString("id") ?: "0"
-
-            if (mediaDetailsViewModel.state.media?.id != id) {
+            if (mediaDetailsViewModel.state.media?.id != id && !mediaDetailsViewModel.state.isLoading) {
+                Timber.e("Media not loaded")
                 mediaDetailsViewModel.getMediaDetail(mediaId = id)
+            } else {
+                Timber.e("Media already loaded")
             }
             MediaDetailScreen(
                 mediaDetailScreenState = mediaDetailsScreenState,
@@ -66,3 +66,10 @@ fun Navigation() {
         }
     }
 }
+
+
+@Serializable
+object HomeScreen
+
+@Serializable
+data class DetailScreen(val id: String)

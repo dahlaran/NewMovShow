@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.dahlaran.newmovshow.domain.model.Media
+import com.dahlaran.newmovshow.presentation.DetailScreen
 import com.dahlaran.newmovshow.presentation.Route
 import timber.log.Timber
 
@@ -28,7 +29,7 @@ fun MediaItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable {
-                navigationController.navigate("${Route.MEDIA_DETAIL_SCREEN}/${media.id}")
+                navigationController.navigate(DetailScreen(media.id))
             }
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
