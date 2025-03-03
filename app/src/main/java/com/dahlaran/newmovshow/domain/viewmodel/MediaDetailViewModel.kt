@@ -1,25 +1,35 @@
 package com.dahlaran.newmovshow.domain.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import com.dahlaran.newmovshow.common.domain.BaseViewModel
 import com.dahlaran.newmovshow.domain.use_case.GetMediaUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class MediaDetailViewModel @Inject constructor(val detailUsesCase: GetMediaUseCase) : BaseViewModel() {
+class MediaDetailViewModel @Inject constructor(private val detailUsesCase: GetMediaUseCase) :
+    BaseViewModel<MediaDetailState, DetailEvent>(MediaDetailState()) {
 
-    var state by mutableStateOf(MediaDetailState())
+    override fun onEvent(event: DetailEvent) {
+        when (event) {
+            is DetailEvent.ArriveOnMedia -> {
+                getMediaDetail(event.mediaId)
+            }
+        }
+    }
 
-    fun getMediaDetail(mediaId: String) {
+    private fun getMediaDetail(mediaId: String) {
         launchUsesCase(detailUsesCase.invoke(mediaId),
-            onLoading = {
-                state = state.copy(isLoading = it)
+            onLoading = { loadingStatus ->
+                _state.update {
+                    it.copy(isLoading = loadingStatus)
+                }
             },
-            onSuccess = {
-                state = state.copy(media = it)
+            onSuccess = { media ->
+
+                _state.update {
+                    it.copy(media = media)
+                }
             })
     }
 }

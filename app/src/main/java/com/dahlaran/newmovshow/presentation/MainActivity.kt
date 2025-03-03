@@ -14,12 +14,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.dahlaran.newmovshow.domain.viewmodel.MediaDetailViewModel
+import com.dahlaran.newmovshow.domain.viewmodel.DetailEvent
 import com.dahlaran.newmovshow.presentation.home.HomeScreen
 import com.dahlaran.newmovshow.presentation.media.MediaDetailScreen
 import com.dahlaran.newmovshow.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -50,14 +50,11 @@ fun Navigation() {
         }
         composable<DetailScreen> {
             val mediaDetailsViewModel = hiltViewModel<MediaDetailViewModel>()
-            val mediaDetailsScreenState = mediaDetailsViewModel.state
+            val mediaDetailsScreenState = mediaDetailsViewModel.state.value
             val id: String = it.toRoute<DetailScreen>().id
 
-            if (mediaDetailsViewModel.state.media?.id != id && !mediaDetailsViewModel.state.isLoading) {
-                Timber.e("Media not loaded")
-                mediaDetailsViewModel.getMediaDetail(mediaId = id)
-            } else {
-                Timber.e("Media already loaded")
+            if (mediaDetailsScreenState.media?.id != id && !mediaDetailsScreenState.isLoading) {
+                mediaDetailsViewModel.onEvent(DetailEvent.ArriveOnMedia(id))
             }
             MediaDetailScreen(
                 mediaDetailScreenState = mediaDetailsScreenState,
