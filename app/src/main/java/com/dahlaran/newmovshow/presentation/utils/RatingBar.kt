@@ -27,7 +27,6 @@ fun RatingBar(
     stars: Int = 5,
     starsColor: Color = Color.Yellow,
 ) {
-
     val filledStars = floor(rating).toInt()
     val unfilledStars = (stars - ceil(rating)).toInt()
     val halfStar = (rating.rem(1) != 0.0)

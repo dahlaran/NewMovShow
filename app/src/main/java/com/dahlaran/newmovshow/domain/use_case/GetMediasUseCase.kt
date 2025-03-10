@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
- * SearchMediaByTitle is a use case that can be used to search medias by title
+ * GetMediasUseCase is a use case that can be used to get a list of media
  */
 class GetMediasUseCase @Inject constructor(private val mediaRepository: MediaRepository) {
 

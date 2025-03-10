@@ -1,14 +1,14 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-    kotlin("kapt")
+    id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
     namespace = "com.dahlaran.newmovshow"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.dahlaran.newmovshow"
@@ -38,22 +38,23 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures {
-        viewBinding = true
         compose = true
+        buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/gradle/incremental.annotation.processors"
         }
     }
 }
@@ -91,15 +92,12 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.androidx.navigation.compose)
     implementation(libs.accompanist.swiperefresh)
-
-    // Compose Nav Destinations
-    //implementation('io.github.raamcosta.compose-destinations:core:1.1.2-beta')
-    //ksp('io.github.raamcosta.compose-destinations:ksp:1.1.2-beta')
+    implementation(libs.kotlinx.serialization.json)
 
     // Hilt dependencies
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     // Retrofit
     implementation(libs.retrofit)
@@ -110,7 +108,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     // To use Kotlin annotation processing tool (kapt)
-    kapt("androidx.room:room-compiler:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
 
     // Kotlin Extensions and Coroutines support for Room
     implementation(libs.androidx.room.ktx)
@@ -125,8 +123,4 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
     testImplementation(libs.junit)
-}
-
-kapt {
-    correctErrorTypes = true
 }

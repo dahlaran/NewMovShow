@@ -13,9 +13,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.dahlaran.newmovshow.domain.model.Media
+import com.dahlaran.newmovshow.presentation.DetailScreen
 import com.dahlaran.newmovshow.presentation.Route
 import timber.log.Timber
 
@@ -29,19 +29,18 @@ fun MediaItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable {
-                Timber.e("ONclick ${media.id}")
-                navigationController.navigate("${Route.MEDIA_DETAIL_SCREEN}/${media.id}")
+                navigationController.navigate(DetailScreen(media.id))
             }
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(
             model = media.image,
-            contentDescription = "${media.name} image"
+            contentDescription = "${media.title} image"
         )
         Text(
             modifier = Modifier.padding(top = 16.dp),
-            text = media.name,
+            text = media.title,
             fontSize = 22.sp,
             fontWeight = FontWeight.Light,
             color = MaterialTheme.colorScheme.onBackground
