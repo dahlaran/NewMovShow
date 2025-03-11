@@ -26,9 +26,6 @@ import com.dahlaran.newmovshow.domain.viewmodel.MediaViewModel
 import com.dahlaran.newmovshow.domain.viewmodel.MediaListState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 @ExperimentalMaterial3Api
 @Composable
