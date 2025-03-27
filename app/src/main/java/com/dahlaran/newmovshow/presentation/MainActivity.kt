@@ -17,6 +17,7 @@ import com.dahlaran.newmovshow.domain.viewmodel.MediaDetailViewModel
 import com.dahlaran.newmovshow.domain.viewmodel.DetailEvent
 import com.dahlaran.newmovshow.presentation.home.HomeScreen
 import com.dahlaran.newmovshow.presentation.media.MediaDetailScreen
+import com.dahlaran.newmovshow.presentation.media.MediaDetailScreenContent
 import com.dahlaran.newmovshow.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
@@ -49,17 +50,10 @@ fun Navigation() {
             HomeScreen(navController = navController)
         }
         composable<DetailScreen> {
-            val mediaDetailsViewModel = hiltViewModel<MediaDetailViewModel>()
-            val mediaDetailsScreenState = mediaDetailsViewModel.state.value
             val id: String = it.toRoute<DetailScreen>().id
-
-            if (mediaDetailsScreenState.media?.id != id && !mediaDetailsScreenState.isLoading) {
-                mediaDetailsViewModel.onEvent(DetailEvent.ArriveOnMedia(id))
-            }
             MediaDetailScreen(
-                mediaDetailScreenState = mediaDetailsScreenState,
-                onEvent = mediaDetailsViewModel::onEvent,
-                navController = navController
+                mediaId = id,
+                navigationController = navController
             )
         }
     }

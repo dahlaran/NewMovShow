@@ -35,4 +35,25 @@ interface MediaRepository {
      * @return a flow that will emit a DataState that contains a media
      */
     fun searchMediaById(id: String): Flow<DataState<Media?>>
+
+    /**
+     * Get favorite medias
+     *
+     * @return a flow that will emit a DataState that contains a list of favorite medias
+     */
+    fun getFavoriteMedias(): Flow<DataState<List<Media>>>
+
+    /**
+     * Add a media to favorite
+     *
+     * @param mediaId the media id to add to favorite
+     */
+    fun addFavoriteMedia(mediaId: String) : Flow<DataState<Media>>
+
+    /**
+     * Remove a media from favorite
+     *
+     * @param mediaId the media id to remove from favorite
+     */
+    fun removeFavoriteMedia(mediaId: String) : Flow<DataState<Media>>
 }

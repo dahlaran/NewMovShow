@@ -27,12 +27,30 @@ interface MediaDao {
     fun getMediaById(id: String): Media?
 
     /**
+     * Get favorite medias
+     *
+     * @return a list of favorite medias
+     */
+    @Query("SELECT * FROM media WHERE isFavorite = 1")
+    fun getFavoriteMedias(): List<Media>
+
+    /**
      * Insert a list of medias
      *
      *  @param medias the list of medias to insert
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMedias(medias: List<Media>)
+
+    /**
+     * Update the isFavorite status of a media and return the updated media
+     *
+     * @param id the id of the media to update
+     * @param isFavorite the new favorite status
+     * @return the updated media
+     */
+    @Query("UPDATE media SET isFavorite = :isFavorite WHERE id = :id")
+    fun updateFavoriteStatus(id: String, isFavorite: Boolean): Int
 
     /**
      * Delete all medias

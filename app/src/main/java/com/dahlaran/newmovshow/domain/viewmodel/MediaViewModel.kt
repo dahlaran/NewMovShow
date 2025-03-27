@@ -1,6 +1,5 @@
 package com.dahlaran.newmovshow.domain.viewmodel
 
-import com.dahlaran.newmovshow.common.data.MainEvents
 import com.dahlaran.newmovshow.common.domain.BaseViewModel
 import com.dahlaran.newmovshow.domain.use_case.GetMediasUseCase
 import com.dahlaran.newmovshow.domain.use_case.SearchMediaByTitleUseCase
@@ -14,13 +13,13 @@ import javax.inject.Inject
 class MediaViewModel @Inject constructor(
     private val getMediasUseCase: GetMediasUseCase,
     private val searchMediaUseCase: SearchMediaByTitleUseCase,
-) : BaseViewModel<MediaListState, MainEvents>(MediaListState()) {
+) : BaseViewModel<MediaListState, MainEvent>(MediaListState()) {
 
-    override fun onEvent(event: MainEvents) {
-        if (event is MainEvents.Refresh) {
+    override fun onEvent(event: MainEvent) {
+        if (event is MainEvent.Refresh) {
             getMedias()
         }
-        else if (event is MainEvents.Search) {
+        else if (event is MainEvent.Search) {
             getSearchMediaByTitle(event.title)
         }
     }

@@ -24,4 +24,27 @@ interface MediaDatabase {
      * @param id the id to get
      */
     fun getMediaById(id: String) : Media?
+
+    /**
+     * Get favorite medias
+     *
+     * @return a list of favorite medias
+     */
+    fun getFavoriteMedias() : List<Media>
+
+    /**
+     * Add a media to favorite
+     *
+     * @param mediaId the media id to add to favorite
+     * @return the media added to favorite
+     */
+    fun addFavoriteMedia(mediaId: String) : Media?
+
+    /**
+     * Remove a media from favorite
+     *
+     * @param mediaId the media id to remove from favorite
+     * @return the media removed from favorite
+     */
+    fun removeFavoriteMedia(mediaId: String) : Media?
 }

@@ -35,13 +35,11 @@ fun VideoSection(media: Media?) {
             .fillMaxWidth()
             .height(250.dp)
             .clickable {
-                Toast
-                    .makeText(
-                        context,
-                        context.getString(R.string.no_video_is_available_at_the_moment),
-                        Toast.LENGTH_SHORT
-                    )
-                    .show()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.no_video_is_available_at_the_moment),
+                    Toast.LENGTH_SHORT
+                ).show()
             }, shape = RoundedCornerShape(0), elevation = CardDefaults.cardElevation(6.dp)
     ) {
         Box(

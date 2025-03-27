@@ -84,4 +84,48 @@ class TVMazeRepository @Inject constructor(private val service: TVMazeApiService
             emit(DataState.Loading(false))
         }
     }
+
+    override fun getFavoriteMedias(): Flow<DataState<List<Media>>> {
+        return flow {
+            emit(DataState.Loading(true))
+            try {
+                emit(DataState.Success(database.getFavoriteMedias()))
+            } catch (e: Exception) {
+                emit(DataState.Error(Error.fromException(e)))
+            }
+            emit(DataState.Loading(false))
+        }
+    }
+
+    override fun addFavoriteMedia(mediaId: String): Flow<DataState<Media>> {
+        return flow {
+            emit(DataState.Loading(true))
+            try {
+                database.addFavoriteMedia(mediaId)?.let {
+                    emit(DataState.Success(it))
+                } ?: run {
+                    emit(DataState.Error(Error.fromException(Exception("Failed to add favorite media"))))
+                }
+            } catch (e: Exception) {
+                emit(DataState.Error(Error.fromException(e)))
+            }
+            emit(DataState.Loading(false))
+        }
+    }
+
+    override fun removeFavoriteMedia(mediaId: String): Flow<DataState<Media>> {
+        return flow {
+            emit(DataState.Loading(true))
+            try {
+                database.removeFavoriteMedia(mediaId)?.let {
+                    emit(DataState.Success(it))
+                } ?: run {
+                    emit(DataState.Error(Error.fromException(Exception("Failed to remove favorite media"))))
+                }
+            } catch (e: Exception) {
+                emit(DataState.Error(Error.fromException(e)))
+            }
+            emit(DataState.Loading(false))
+        }
+    }
 }

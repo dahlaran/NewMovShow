@@ -6,8 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,14 +19,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.dahlaran.newmovshow.common.data.Constants
-import com.dahlaran.newmovshow.common.data.MainEvents
+import com.dahlaran.newmovshow.domain.viewmodel.MainEvent
 import com.dahlaran.newmovshow.domain.model.Media
 import com.dahlaran.newmovshow.domain.viewmodel.MediaViewModel
 import com.dahlaran.newmovshow.domain.viewmodel.MediaListState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
-@ExperimentalMaterial3Api
 @Composable
 fun MediaListScreen(
     navigationController: NavHostController,
@@ -36,7 +34,7 @@ fun MediaListScreen(
     val state = mediaViewModel.state.collectAsState().value
 
     LaunchedEffect(Unit) {
-        mediaViewModel.onEvent(MainEvents.Refresh(""))
+        mediaViewModel.onEvent(MainEvent.Refresh(""))
     }
 
     MediaListScreenContent(
@@ -46,15 +44,14 @@ fun MediaListScreen(
     )
 }
 
-@ExperimentalMaterial3Api
 @Composable
 fun MediaListScreenContent(
     navigationController: NavHostController,
     state: MediaListState,
-    onEvent: (event: MainEvents) -> Unit
+    onEvent: (event: MainEvent) -> Unit
 ) {
-    fun refresh() = onEvent(MainEvents.Refresh(Constants.GET_MOVIES))
-    fun onChange(search: String) = onEvent(MainEvents.Search(search))
+    fun refresh() = onEvent(MainEvent.Refresh(Constants.GET_MOVIES))
+    fun onChange(search: String) = onEvent(MainEvent.Search(search))
 
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isLoading)
 
@@ -84,28 +81,17 @@ fun MediaListScreenContent(
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(state.medias.size) { i ->
+                items(state.medias, key = { it.id }) { media ->
                     MediaItem(
                         navigationController,
-                        media = state.medias[i],
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
+                        media = media,
                     )
-                    if (i < state.medias.size) {
-                        HorizontalDivider(
-                            modifier = Modifier.padding(
-                                horizontal = 16.dp
-                            )
-                        )
-                    }
                 }
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun MediaListScreenContentPreview() {
