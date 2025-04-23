@@ -12,23 +12,6 @@ import kotlinx.coroutines.flow.Flow
 interface MediaRepository {
 
     /**
-     * Get a list of medias
-     *
-     * @param page the page to get
-     * @return a flow that will emit a DataState that contains a list of medias
-     */
-    fun getMedias(page: Int): Flow<DataState<List<Media>>>
-
-    /**
-     * Search a list of media by title
-     *
-     * @param title the title to search
-     * @param page the page to get
-     * @return a flow that will emit a DataState that contains a list of medias
-     */
-    fun searchMediaByTitle(title: String, page: Int): Flow<DataState<List<Media>>>
-
-    /**
      * Search a media by id
      *
      * @param id the id to search

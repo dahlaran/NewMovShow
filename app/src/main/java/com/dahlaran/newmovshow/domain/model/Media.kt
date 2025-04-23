@@ -25,7 +25,7 @@ data class Media(@PrimaryKey val id: String,
                  val updated: Int,
                  val url: String,
                  val weight: Int,
-                 val isFavorite: Boolean = false) {
+                 var isFavorite: Boolean = false) {
 
     fun getSummaryToDisplay(): String {
         return HtmlUtils.convertHtmlTextToShowText(summary).toString().trim()

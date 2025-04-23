@@ -1,10 +1,7 @@
 package com.dahlaran.newmovshow.presentation.favorite
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,8 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import com.dahlaran.newmovshow.domain.model.Media
 import com.dahlaran.newmovshow.presentation.DetailScreen
@@ -42,41 +41,59 @@ fun MediaFavoriteItem(
             navigationController.navigate(DetailScreen(media.id))
         }
     ) {
-        Column {
-            Box(
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            AsyncImage(
+                model = media.image,
+                contentDescription = media.title,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-            ) {
-                AsyncImage(
-                    model = media.image,
-                    contentDescription = media.title,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(120.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
+                    .size(120.dp)
+                    .clip(RoundedCornerShape(8.dp))
+            )
 
-                Icon(
-                    imageVector = Icons.Default.Favorite,
-                    contentDescription = "Favorite",
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(8.dp)
-                        .size(24.dp)
-                )
-            }
-
-            Column(
-                modifier = Modifier.padding(12.dp)
-            ) {
-                Text(
-                    text = media.title,
-                    style = MaterialTheme.typography.titleMedium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
+            Icon(
+                imageVector = Icons.Default.Favorite,
+                contentDescription = "Favorite",
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(8.dp)
+                    .size(24.dp)
+            )
+            Text(
+                modifier = Modifier
+                    .padding(12.dp)
+                    .align(Alignment.BottomCenter),
+                        text = media . title,
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
         }
     }
+}
+
+@Preview
+@Composable
+fun MediaFavoriteItemPreview() {
+    val media = Media(
+        id = "1",
+        genres = listOf("Action", "Adventure"),
+        title = "Movie 1",
+        image = null,
+        language = "English", officialSite = null,
+        premiered = "2021-01-01",
+        rating = 4.5,
+        runtime = 120,
+        seasons = null,
+        status = "Running",
+        summary = "This is a movie",
+        type = "Movie",
+        updated = 0,
+        url = "https://static.tvmaze.com/uploads/images/original_untouched/1/4600.jpg",
+        weight = 0
+    )
+    MediaFavoriteItem(media = media, navigationController = rememberNavController())
 }
