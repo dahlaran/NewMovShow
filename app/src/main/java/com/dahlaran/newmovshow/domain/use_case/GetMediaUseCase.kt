@@ -26,7 +26,6 @@ class GetMediaUseCase @Inject constructor(
             try {
                 val localMedia = DataState.Success(localData.getMediaById(mediaId))
                 emit(localMedia)
-
                 val response = remoteData.searchMediaById(mediaId)
                 response.body()?.toMedia()?.let { remoteData ->
                     localMedia.data?.let { media ->

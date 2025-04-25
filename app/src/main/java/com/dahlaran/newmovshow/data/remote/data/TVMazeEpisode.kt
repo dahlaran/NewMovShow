@@ -16,7 +16,7 @@ data class TVMazeEpisode(
     val number: Int,
     val runtime: Int,
     val season: Int,
-    val summary: String,
+    val summary: String?,
     var time: Date?,
     val url: String
 ) {
@@ -26,7 +26,7 @@ data class TVMazeEpisode(
             airstamp,
             airtime,
             id,
-            image?.original?: "",
+            image?.original,
             name,
             number,
             runtime,
