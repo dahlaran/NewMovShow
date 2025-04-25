@@ -8,13 +8,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.dahlaran.newmovshow.domain.viewmodel.MediaDetailViewModel
-import com.dahlaran.newmovshow.domain.viewmodel.DetailEvent
 import com.dahlaran.newmovshow.presentation.home.HomeScreen
 import com.dahlaran.newmovshow.presentation.media.MediaDetailScreen
 import com.dahlaran.newmovshow.theme.AppTheme
@@ -49,17 +46,10 @@ fun Navigation() {
             HomeScreen(navController = navController)
         }
         composable<DetailScreen> {
-            val mediaDetailsViewModel = hiltViewModel<MediaDetailViewModel>()
-            val mediaDetailsScreenState = mediaDetailsViewModel.state.value
             val id: String = it.toRoute<DetailScreen>().id
-
-            if (mediaDetailsScreenState.media?.id != id && !mediaDetailsScreenState.isLoading) {
-                mediaDetailsViewModel.onEvent(DetailEvent.ArriveOnMedia(id))
-            }
             MediaDetailScreen(
-                mediaDetailScreenState = mediaDetailsScreenState,
-                onEvent = mediaDetailsViewModel::onEvent,
-                navController = navController
+                mediaId = id,
+                navigationController = navController
             )
         }
     }

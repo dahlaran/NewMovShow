@@ -10,7 +10,6 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,14 +20,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.dahlaran.newmovshow.common.data.MainEvents
 import com.dahlaran.newmovshow.presentation.Route
+import com.dahlaran.newmovshow.presentation.favorite.MediaFavoriteScreen
 import com.dahlaran.newmovshow.presentation.media.MediaListScreen
 
 
 @Composable
 fun HomeScreen(
-    navController: NavHostController) {
+    navController: NavHostController
+) {
     val itemList = listOf(
         BottomNavItem(
             name = "Home",
@@ -49,14 +49,16 @@ fun HomeScreen(
     )
 
     val bottomBarNavController = rememberNavController()
-    val currentRoute = bottomBarNavController.currentBackStackEntryAsState().value?.destination?.route ?: Route.SETTINGS_SCREEN
+    val currentRoute =
+        bottomBarNavController.currentBackStackEntryAsState().value?.destination?.route
+            ?: Route.SETTINGS_SCREEN
     val currentRouteIndex = itemList.indexOfFirst { it.route == currentRoute }
     Scaffold(bottomBar = {
         BottomNavBar(
             itemList,
             modifier = Modifier,
             selectedItemIndex = currentRouteIndex,
-            onItemClick = {item ->
+            onItemClick = { item ->
                 if (currentRoute != item.route) {
                     bottomBarNavController.navigate(item.route) {
                         popUpTo(navController.graph.startDestinationId)
@@ -89,7 +91,7 @@ fun BottomNavigationScreens(
             MediaScreen(navHostController)
         }
         composable(Route.FAVORITE_SCREEN) {
-            FavoriteScreen()
+            FavoriteScreen(navHostController)
         }
         composable(Route.SETTINGS_SCREEN) {
             SettingsScreen()
@@ -97,7 +99,6 @@ fun BottomNavigationScreens(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MediaScreen(navHostController: NavHostController) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -106,9 +107,9 @@ fun MediaScreen(navHostController: NavHostController) {
 }
 
 @Composable
-fun FavoriteScreen() {
+fun FavoriteScreen(navHostController: NavHostController) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = "Favorite Screen")
+        MediaFavoriteScreen(navHostController)
     }
 }
 
