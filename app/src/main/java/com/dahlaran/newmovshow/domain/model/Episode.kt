@@ -1,10 +1,8 @@
 package com.dahlaran.newmovshow.domain.model
 
 import android.text.Spanned
-import com.dahlaran.newmovshow.common.HtmlUtils
-import com.dahlaran.newmovshow.R
-import com.dahlaran.newmovshow.application.NewMovShowApplication
 import com.dahlaran.newmovshow.common.DateUtils
+import com.dahlaran.newmovshow.common.HtmlUtils
 import java.util.Date
 
 data class Episode(
@@ -12,14 +10,14 @@ data class Episode(
     val airstamp: String,
     val airtime: String,
     val id: Int,
-    val imageUrl: String,
+    val imageUrl: String?,
     val name: String,
     val number: Int,
     val runtime: Int,
     val season: Int,
-    val summary: String,
+    val summary: String?,
     var time: Date?,
-    val url: String
+    val url: String?
 ) {
     private var summarySpanned: Spanned? = null
 
@@ -55,6 +53,7 @@ data class Episode(
         if (summarySpanned?.isNotEmpty() == true) {
             return summarySpanned.toString().trim()
         }
-        return summarySpanned.toString().trim() //NewMovShowApplication.instance.get()?.getString(R.string.episode_any_summary) ?: ""
+        return summarySpanned.toString()
+            .trim() //NewMovShowApplication.instance.get()?.getString(R.string.episode_any_summary) ?: ""
     }
 }

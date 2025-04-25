@@ -16,10 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
+import com.dahlaran.newmovshow.common.presentation.drawItemDividerHorizontal
 import com.dahlaran.newmovshow.domain.model.Media
 import com.dahlaran.newmovshow.presentation.DetailScreen
-import com.dahlaran.newmovshow.presentation.Route
-import timber.log.Timber
 
 @Composable
 fun MediaItem(
@@ -33,7 +32,8 @@ fun MediaItem(
             .clickable {
                 navigationController.navigate(DetailScreen(media.id))
             }
-            .padding(8.dp),
+            .drawItemDividerHorizontal()
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(

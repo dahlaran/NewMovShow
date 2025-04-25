@@ -9,7 +9,7 @@ object HtmlUtils {
      * Return displayable styled text using html text
      */
     fun convertHtmlTextToShowText(htmlText: String?): Spanned {
-        if (htmlText.isNullOrEmpty()){
+        if (htmlText.isNullOrEmpty()) {
             return Html.fromHtml("")
         }
         // TODO: use fromHtml(String, int) instead with FROM_HTML_MODE_LEGACY as int

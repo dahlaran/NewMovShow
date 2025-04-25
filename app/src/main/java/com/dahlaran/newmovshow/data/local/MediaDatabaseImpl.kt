@@ -31,4 +31,33 @@ class MediaDatabaseImpl(private val mediaDao: MediaDao) : MediaDatabase {
             return null
         }
     }
+
+    override fun getFavoriteMedias(): List<Media> {
+        return try {
+            mediaDao.getFavoriteMedias()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emptyList()
+        }
+    }
+
+    override fun addFavoriteMedia(mediaId: String): Media? {
+        return try {
+            mediaDao.updateFavoriteStatus(mediaId, true)
+            mediaDao.getMediaById(mediaId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override fun removeFavoriteMedia(mediaId: String): Media? {
+        return try {
+            mediaDao.updateFavoriteStatus(mediaId, false)
+            mediaDao.getMediaById(mediaId)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 }

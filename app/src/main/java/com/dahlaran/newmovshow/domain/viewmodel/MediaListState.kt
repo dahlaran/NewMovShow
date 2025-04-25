@@ -14,4 +14,5 @@ data class MediaListState(
     val medias: List<Media> = emptyList(),
     val mediaPage: Int = 0,
     val isLoading: Boolean = false,
-    val searchQuery: String = "")
+    val searchQuery: String = ""
+)

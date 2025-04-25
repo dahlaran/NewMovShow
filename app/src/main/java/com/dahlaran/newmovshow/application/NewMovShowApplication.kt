@@ -5,7 +5,6 @@ import dagger.hilt.android.HiltAndroidApp
 import net.danlew.android.joda.BuildConfig
 import timber.log.Timber
 import java.lang.ref.WeakReference
-import javax.inject.Inject
 
 @HiltAndroidApp
 class NewMovShowApplication : Application() {
