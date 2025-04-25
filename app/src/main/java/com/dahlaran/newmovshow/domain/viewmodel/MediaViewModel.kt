@@ -18,8 +18,7 @@ class MediaViewModel @Inject constructor(
     override fun onEvent(event: MainEvent) {
         if (event is MainEvent.Refresh) {
             getMedias()
-        }
-        else if (event is MainEvent.Search) {
+        } else if (event is MainEvent.Search) {
             getSearchMediaByTitle(event.title)
         }
     }
@@ -30,7 +29,8 @@ class MediaViewModel @Inject constructor(
      * @return a flow of DataState<List<Media>>
      */
     private fun getMedias() {
-        launchUsesCase(getMediasUseCase.invoke(_state.value.mediaPage),
+        launchUsesCase(
+            getMediasUseCase.invoke(_state.value.mediaPage),
             onLoading = { loadingStatus ->
                 _state.update {
                     it.copy(isLoading = loadingStatus)
@@ -62,7 +62,8 @@ class MediaViewModel @Inject constructor(
                 )
             }
         }
-        launchUsesCase(searchMediaUseCase.invoke(title, _state.value.mediaPage),
+        launchUsesCase(
+            searchMediaUseCase.invoke(title, _state.value.mediaPage),
             onLoading = { loadingStatus ->
                 _state.update {
                     it.copy(

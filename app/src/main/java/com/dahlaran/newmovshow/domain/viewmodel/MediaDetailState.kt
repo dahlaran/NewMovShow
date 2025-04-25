@@ -6,4 +6,5 @@ import com.dahlaran.newmovshow.domain.model.Media
 data class MediaDetailState(
     val media: Media? = null,
     val isLoading: Boolean = false,
-    val error: Error? = null)
+    val error: Error? = null
+)

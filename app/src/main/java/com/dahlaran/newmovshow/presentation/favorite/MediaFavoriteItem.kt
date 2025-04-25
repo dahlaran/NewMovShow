@@ -50,23 +50,15 @@ fun MediaFavoriteItem(
                 contentDescription = media.title,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(120.dp)
+                    .size(160.dp)
                     .clip(RoundedCornerShape(8.dp))
             )
 
-            Icon(
-                imageVector = Icons.Default.Favorite,
-                contentDescription = "Favorite",
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(8.dp)
-                    .size(24.dp)
-            )
             Text(
                 modifier = Modifier
                     .padding(12.dp)
                     .align(Alignment.BottomCenter),
-                        text = media . title,
+                text = media.title,
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis

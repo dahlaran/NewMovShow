@@ -9,23 +9,25 @@ import com.dahlaran.newmovshow.common.HtmlUtils
  * Show is a data class that represents a show
  */
 @Entity(tableName = "media")
-data class Media(@PrimaryKey val id: String,
-                 val genres: List<String>?,
-                 val image: String?,
-                 val language: String?,
-                 val title: String,
-                 val officialSite: String?,
-                 val premiered: String?,
-                 val rating: Double,
-                 val runtime: Int,
-                 val seasons: SeasonList?,
-                 val status: String,
-                 val summary: String?,
-                 val type: String,
-                 val updated: Int,
-                 val url: String,
-                 val weight: Int,
-                 var isFavorite: Boolean = false) {
+data class Media(
+    @PrimaryKey val id: String,
+    val genres: List<String>?,
+    val image: String?,
+    val language: String?,
+    val title: String,
+    val officialSite: String?,
+    val premiered: String?,
+    val rating: Double,
+    val runtime: Int,
+    val seasons: SeasonList?,
+    val status: String,
+    val summary: String?,
+    val type: String,
+    val updated: Int,
+    val url: String,
+    val weight: Int,
+    var isFavorite: Boolean = false
+) {
 
     fun getSummaryToDisplay(): String {
         return HtmlUtils.convertHtmlTextToShowText(summary).toString().trim()

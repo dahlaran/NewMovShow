@@ -1,8 +1,8 @@
 package com.dahlaran.newmovshow.data.remote.data
 
-import com.dahlaran.newmovshow.domain.model.SeasonList
 import com.dahlaran.newmovshow.domain.model.Episode
 import com.dahlaran.newmovshow.domain.model.Season
+import com.dahlaran.newmovshow.domain.model.SeasonList
 import java.util.Calendar
 
 data class TVMazeEmbedded(

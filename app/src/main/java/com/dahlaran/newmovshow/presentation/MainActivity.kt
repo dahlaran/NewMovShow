@@ -8,16 +8,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.dahlaran.newmovshow.domain.viewmodel.MediaDetailViewModel
-import com.dahlaran.newmovshow.domain.viewmodel.DetailEvent
 import com.dahlaran.newmovshow.presentation.home.HomeScreen
 import com.dahlaran.newmovshow.presentation.media.MediaDetailScreen
-import com.dahlaran.newmovshow.presentation.media.MediaDetailScreenContent
 import com.dahlaran.newmovshow.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable

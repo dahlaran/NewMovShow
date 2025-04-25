@@ -15,7 +15,10 @@ import javax.inject.Inject
  * @property remoteData the remote data source to use
  * @property localData the local data source to use
  */
-class SearchMediaByTitleUseCase @Inject constructor(private val remoteData: TVMazeApiServices, private val localData: MediaDatabase) {
+class SearchMediaByTitleUseCase @Inject constructor(
+    private val remoteData: TVMazeApiServices,
+    private val localData: MediaDatabase
+) {
 
     /**
      * Search medias by title from the repository

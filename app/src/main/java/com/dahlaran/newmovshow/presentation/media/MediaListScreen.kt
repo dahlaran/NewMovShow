@@ -19,10 +19,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.dahlaran.newmovshow.common.data.Constants
-import com.dahlaran.newmovshow.domain.viewmodel.MainEvent
 import com.dahlaran.newmovshow.domain.model.Media
-import com.dahlaran.newmovshow.domain.viewmodel.MediaViewModel
+import com.dahlaran.newmovshow.domain.viewmodel.MainEvent
 import com.dahlaran.newmovshow.domain.viewmodel.MediaListState
+import com.dahlaran.newmovshow.domain.viewmodel.MediaViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -96,26 +96,26 @@ fun MediaListScreenContent(
 @Composable
 fun MediaListScreenContentPreview() {
     val viewModelMock = MediaListState(
-            medias = listOf(
-                Media(
-                    id = "1",
-                    genres = listOf("Action", "Adventure"),
-                    title = "Movie 1",
-                    image = null,
-                    language = "English", officialSite = null,
-                    premiered = "2021-01-01",
-                    rating = 4.5,
-                    runtime = 120,
-                    seasons = null,
-                    status = "Running",
-                    summary = "This is a movie",
-                    type = "Movie",
-                    updated = 0,
-                    url = "",
-                    weight = 0
-                )
+        medias = listOf(
+            Media(
+                id = "1",
+                genres = listOf("Action", "Adventure"),
+                title = "Movie 1",
+                image = null,
+                language = "English", officialSite = null,
+                premiered = "2021-01-01",
+                rating = 4.5,
+                runtime = 120,
+                seasons = null,
+                status = "Running",
+                summary = "This is a movie",
+                type = "Movie",
+                updated = 0,
+                url = "",
+                weight = 0
             )
         )
+    )
 
     MediaListScreenContent(
         navigationController = rememberNavController(),

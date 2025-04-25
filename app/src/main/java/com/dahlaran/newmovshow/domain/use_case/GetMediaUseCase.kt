@@ -9,7 +9,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetMediaUseCase @Inject constructor(private val remoteData: TVMazeApiServices, private val localData: MediaDatabase) {
+class GetMediaUseCase @Inject constructor(
+    private val remoteData: TVMazeApiServices,
+    private val localData: MediaDatabase
+) {
 
     /**
      * Get specific media from the repository

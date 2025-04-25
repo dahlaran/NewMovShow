@@ -6,7 +6,6 @@ import com.dahlaran.newmovshow.data.local.AppDatabase
 import com.dahlaran.newmovshow.data.local.MediaDao
 import com.dahlaran.newmovshow.data.local.MediaDatabase
 import com.dahlaran.newmovshow.data.local.MediaDatabaseImpl
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

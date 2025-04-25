@@ -31,6 +31,7 @@ class MediaDetailViewModel @Inject constructor(
                 if (_state.value.media == null) return
                 addFavoriteMedia(lastMediaId)
             }
+
             is DetailEvent.RemoveFavorite -> {
                 if (_state.value.media == null) return
                 removeFavoriteMedia(lastMediaId)
@@ -40,7 +41,8 @@ class MediaDetailViewModel @Inject constructor(
 
     private fun getMediaDetail(mediaId: String) {
         lastMediaId = mediaId
-        launchUsesCase(detailUsesCase.invoke(mediaId),
+        launchUsesCase(
+            detailUsesCase.invoke(mediaId),
             onLoading = { loadingStatus ->
                 _state.update {
                     it.copy(isLoading = loadingStatus)
@@ -54,7 +56,8 @@ class MediaDetailViewModel @Inject constructor(
     }
 
     private fun addFavoriteMedia(mediaId: String) {
-        launchUsesCase(addFavoriteMediaUseCase.invoke(mediaId),
+        launchUsesCase(
+            addFavoriteMediaUseCase.invoke(mediaId),
             onLoading = { loadingStatus ->
                 _state.update {
                     it.copy(isLoading = loadingStatus, error = null)
@@ -64,7 +67,8 @@ class MediaDetailViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        media = media)
+                        media = media
+                    )
                 }
             },
             onError = { error ->
@@ -78,7 +82,8 @@ class MediaDetailViewModel @Inject constructor(
     }
 
     private fun removeFavoriteMedia(mediaId: String) {
-        launchUsesCase(removeFavoriteMediaUseCase.invoke(mediaId),
+        launchUsesCase(
+            removeFavoriteMediaUseCase.invoke(mediaId),
             onLoading = { loadingStatus ->
                 _state.update {
                     it.copy(isLoading = loadingStatus, error = null)
@@ -88,7 +93,8 @@ class MediaDetailViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        media = media)
+                        media = media
+                    )
                 }
             },
             onError = { error ->

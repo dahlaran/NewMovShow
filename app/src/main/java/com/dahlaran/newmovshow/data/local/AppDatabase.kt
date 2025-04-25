@@ -10,6 +10,6 @@ import com.dahlaran.newmovshow.domain.model.Media
  */
 @Database(entities = [Media::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun mediaDao(): MediaDao
 }

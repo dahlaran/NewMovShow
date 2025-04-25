@@ -2,7 +2,8 @@ package com.dahlaran.newmovshow.common
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 object DateUtils {
     private val episodeDateTimeFormatter: SimpleDateFormat by lazy {

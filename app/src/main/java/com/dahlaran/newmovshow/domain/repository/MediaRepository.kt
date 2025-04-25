@@ -31,12 +31,12 @@ interface MediaRepository {
      *
      * @param mediaId the media id to add to favorite
      */
-    fun addFavoriteMedia(mediaId: String) : Flow<DataState<Media>>
+    fun addFavoriteMedia(mediaId: String): Flow<DataState<Media>>
 
     /**
      * Remove a media from favorite
      *
      * @param mediaId the media id to remove from favorite
      */
-    fun removeFavoriteMedia(mediaId: String) : Flow<DataState<Media>>
+    fun removeFavoriteMedia(mediaId: String): Flow<DataState<Media>>
 }

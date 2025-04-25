@@ -10,7 +10,6 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +27,8 @@ import com.dahlaran.newmovshow.presentation.media.MediaListScreen
 
 @Composable
 fun HomeScreen(
-    navController: NavHostController) {
+    navController: NavHostController
+) {
     val itemList = listOf(
         BottomNavItem(
             name = "Home",
@@ -49,14 +49,16 @@ fun HomeScreen(
     )
 
     val bottomBarNavController = rememberNavController()
-    val currentRoute = bottomBarNavController.currentBackStackEntryAsState().value?.destination?.route ?: Route.SETTINGS_SCREEN
+    val currentRoute =
+        bottomBarNavController.currentBackStackEntryAsState().value?.destination?.route
+            ?: Route.SETTINGS_SCREEN
     val currentRouteIndex = itemList.indexOfFirst { it.route == currentRoute }
     Scaffold(bottomBar = {
         BottomNavBar(
             itemList,
             modifier = Modifier,
             selectedItemIndex = currentRouteIndex,
-            onItemClick = {item ->
+            onItemClick = { item ->
                 if (currentRoute != item.route) {
                     bottomBarNavController.navigate(item.route) {
                         popUpTo(navController.graph.startDestinationId)

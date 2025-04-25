@@ -30,10 +30,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.dahlaran.newmovshow.domain.viewmodel.DetailEvent
-import com.dahlaran.newmovshow.domain.viewmodel.MainEvent
 import com.dahlaran.newmovshow.domain.viewmodel.MediaDetailState
 import com.dahlaran.newmovshow.domain.viewmodel.MediaDetailViewModel
-import com.dahlaran.newmovshow.domain.viewmodel.MediaViewModel
 import com.dahlaran.newmovshow.presentation.media.detail_sections.InfoSection
 import com.dahlaran.newmovshow.presentation.media.detail_sections.OverviewSection
 import com.dahlaran.newmovshow.presentation.media.detail_sections.PosterSection
@@ -150,7 +148,8 @@ fun MediaDetailScreenContent(
 @Preview
 @Composable
 fun MediaDetailScreenPreview() {
-    MediaDetailScreenContent(mediaDetailScreenState = MediaDetailState(),
+    MediaDetailScreenContent(
+        mediaDetailScreenState = MediaDetailState(),
         navController = rememberNavController(),
         onEvent = { })
 }

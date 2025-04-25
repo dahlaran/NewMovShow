@@ -6,7 +6,7 @@ import com.dahlaran.newmovshow.common.Event
 /**
  * Events for the Detail State
  */
-sealed class MediaFavoriteEvent: Event {
-    data object ArriveOnFavorite: MediaFavoriteEvent()
+sealed class MediaFavoriteEvent : Event {
+    data object ArriveOnFavorite : MediaFavoriteEvent()
     data object Refresh : MediaFavoriteEvent()
 }
