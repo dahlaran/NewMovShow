@@ -44,4 +44,6 @@
     <string name="error_time_out">Time out</string>
     <string name="no_video_is_available_at_the_moment">No video are available at the moment</string>
     <string name="back">Return to previous page</string>
+    <string name="expanded">Expanded</string>
+    <string name="collapsed">Collapsed</string>
 </resources>
