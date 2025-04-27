@@ -21,15 +21,11 @@ data class Episode(
 ) {
     private var summarySpanned: Spanned? = null
 
-
     /**
-     * Make a string with the season and the number of the episode
-     *
-     * @return String with the season and the number of the episode
+     * Init the title of the episode
+     * The title is the episode number and the name of the episode
      */
-    fun makeEpisodeDetail(): String {
-        return "${season}x${number}"
-    }
+    val title = "Ep ${number} - ${name}"
 
     /**
      * Init the time of apparition of the episode
@@ -53,7 +49,6 @@ data class Episode(
         if (summarySpanned?.isNotEmpty() == true) {
             return summarySpanned.toString().trim()
         }
-        return summarySpanned.toString()
-            .trim() //NewMovShowApplication.instance.get()?.getString(R.string.episode_any_summary) ?: ""
+        return summarySpanned?.toString()?.trim() ?: ""
     }
 }
