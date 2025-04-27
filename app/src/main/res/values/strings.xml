@@ -28,7 +28,10 @@
     <string name="next_episode_detail">%s (%s)</string>
     <string name="trailer">Trailer</string>
     <string name="trailer_play">Play trailer</string>
-
+    <string name="show_summary">• • • Show summary • • •</string>
+    <string name="back">Return to previous page</string>
+    <string name="expanded">Expanded</string>
+    <string name="collapsed">Collapsed</string>
 
     <!-- Errors -->
     <string name="error_default">An Error Occurred</string>
@@ -42,6 +45,6 @@
     <string name="error_payment_required">Need Payment</string>
     <string name="error_no_found">No Found</string>
     <string name="error_time_out">Time out</string>
+    <string name="error_server">Error Server</string>
     <string name="no_video_is_available_at_the_moment">No video are available at the moment</string>
-    <string name="back">Return to previous page</string>
 </resources>

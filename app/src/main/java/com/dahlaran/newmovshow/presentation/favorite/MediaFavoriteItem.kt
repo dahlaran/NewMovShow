@@ -47,7 +47,7 @@ fun MediaFavoriteItem(
                 contentDescription = media.title,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(160.dp)
+                    .fillMaxSize()
                     .clip(RoundedCornerShape(8.dp))
             )
 
