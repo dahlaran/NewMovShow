@@ -35,6 +35,7 @@ import com.dahlaran.newmovshow.domain.viewmodel.MediaDetailViewModel
 import com.dahlaran.newmovshow.presentation.media.detail_sections.InfoSection
 import com.dahlaran.newmovshow.presentation.media.detail_sections.OverviewSection
 import com.dahlaran.newmovshow.presentation.media.detail_sections.PosterSection
+import com.dahlaran.newmovshow.presentation.media.detail_sections.SeasonListSection
 import com.dahlaran.newmovshow.presentation.media.detail_sections.VideoSection
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -139,6 +140,11 @@ fun MediaDetailScreenContent(
                     OverviewSection(media = media)
 
                     Spacer(modifier = Modifier.height(16.dp))
+
+                    media.seasons?.let {
+                        SeasonListSection(seasonList =  it)
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
                 }
             }
         }

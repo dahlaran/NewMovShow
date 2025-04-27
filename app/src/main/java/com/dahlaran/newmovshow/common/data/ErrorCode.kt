@@ -12,7 +12,8 @@ enum class ErrorCode(val value: Int) {
     CODE_PAYMENT_REQUIRED(402),
     CODE_FORBIDDEN(403),
     CODE_NOT_FOUND(404),
-    CODE_TIMEOUT(408);
+    CODE_TIMEOUT(408),
+    CODE_INTERNAL_SERVER_ERROR(500);
 
     companion object {
         fun fromInt(value: Int?): ErrorCode {
