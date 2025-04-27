@@ -49,15 +49,13 @@ fun SeasonItem(season: Season) {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
                         isExpanded = !isExpanded
-                    }
+                    }.padding(12.dp)
             ) {
                 Text(text = "Season " + season.seasonNumber, modifier = Modifier.weight(1f))
                 if (isExpanded) {
@@ -66,7 +64,6 @@ fun SeasonItem(season: Season) {
                     Icon(Icons.Default.KeyboardArrowDown, contentDescription = stringResource(id = R.string.collapsed))
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp))
              Column {
                 season.episodes.forEachIndexed { index, episode ->
                     AnimatedVisibility(
@@ -74,7 +71,6 @@ fun SeasonItem(season: Season) {
                         enter = slideInVertically( initialOffsetY =  { it * (index + 1) / 2 } ) + expandVertically() + fadeIn(),
                         exit = slideOutVertically() + shrinkVertically() + fadeOut(),
                         modifier = Modifier
-                            .fillMaxWidth()
                             .padding(8.dp)
                     ) {
                         EpisodeItem(episode = episode)

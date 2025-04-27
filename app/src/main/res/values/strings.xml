@@ -28,7 +28,7 @@
     <string name="next_episode_detail">%s (%s)</string>
     <string name="trailer">Trailer</string>
     <string name="trailer_play">Play trailer</string>
-
+    <string name="show_summary">• • • Show summary • • •</string>
 
     <!-- Errors -->
     <string name="error_default">An Error Occurred</string>
