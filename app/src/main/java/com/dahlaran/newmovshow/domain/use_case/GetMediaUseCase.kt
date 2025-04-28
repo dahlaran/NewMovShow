@@ -27,11 +27,12 @@ class GetMediaUseCase @Inject constructor(
                 val localMedia = DataState.Success(localData.getMediaById(mediaId))
                 emit(localMedia)
                 val response = remoteData.searchMediaById(mediaId)
-                response.body()?.toMedia()?.let { remoteData ->
+                response.body()?.toMedia()?.let { remoteMedia ->
                     localMedia.data?.let { media ->
-                        remoteData.isFavorite = media.isFavorite
+                        remoteMedia.isFavorite = media.isFavorite
                     }
-                    emit(DataState.Success(remoteData))
+                    localData.saveMedia(remoteMedia)
+                    emit(DataState.Success(remoteMedia))
                 } ?: run {
                     emit(DataState.Error(Error.fromResponseBody(response.errorBody())))
                 }

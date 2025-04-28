@@ -64,7 +64,7 @@ fun MediaFavoriteScreenContent(
         )
         SwipeRefresh(state = swipeRefreshState, onRefresh = { refresh() }) {
             LazyVerticalGrid(
-                columns = GridCells.Adaptive(100.dp),
+                columns = GridCells.Adaptive(120.dp),
                 contentPadding = PaddingValues(8.dp),
                 modifier = Modifier.fillMaxSize()
             ) {

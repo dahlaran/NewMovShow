@@ -23,6 +23,13 @@ class MediaDatabaseImpl(private val mediaDao: MediaDao) : MediaDatabase {
         }
     }
 
+    override fun saveMedia(media: Media) {
+        try {
+            mediaDao.insertMedia(media)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
     override fun getMediaById(id: String): Media? {
         try {
             return mediaDao.getMediaById(id)

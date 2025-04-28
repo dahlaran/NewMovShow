@@ -43,6 +43,14 @@ interface MediaDao {
     fun insertMedias(medias: List<Media>)
 
     /**
+     * Insert a media
+     *
+     *  @param media media to insert
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMedia(medias: Media)
+
+    /**
      * Update the isFavorite status of a media and return the updated media
      *
      * @param id the id of the media to update
