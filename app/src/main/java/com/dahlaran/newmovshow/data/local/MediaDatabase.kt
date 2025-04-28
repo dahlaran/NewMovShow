@@ -19,6 +19,13 @@ interface MediaDatabase {
     fun saveMedias(medias: List<Media>)
 
     /**
+     * Save a media
+     *
+     * @param media the media to save
+     */
+    fun saveMedia(media: Media)
+
+    /**
      * Get a media by id
      *
      * @param id the id to get
