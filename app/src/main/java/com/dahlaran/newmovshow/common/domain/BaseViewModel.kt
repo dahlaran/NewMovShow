@@ -35,7 +35,7 @@ abstract class BaseViewModel<D : Any, E : Event>(initialState: D) : ViewModel() 
             when (dataState) {
                 is DataState.Loading -> {
                     runOnUIThread {
-                        onLoading?.invoke(dataState.loading)
+                        onLoading?.invoke(dataState.isLoading)
                     }
                 }
 

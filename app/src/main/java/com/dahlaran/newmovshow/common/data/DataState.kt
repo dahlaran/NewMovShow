@@ -9,7 +9,7 @@ sealed class DataState<out T> {
     /**
      * Loading state
      */
-    data class Loading<T>(val loading: Boolean = true) : DataState<T>()
+    data class Loading<T>(val isLoading: Boolean = true) : DataState<T>()
 
     /**
      * Success state

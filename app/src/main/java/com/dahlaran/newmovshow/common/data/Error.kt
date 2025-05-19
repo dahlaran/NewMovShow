@@ -61,6 +61,7 @@ data class Error(val status: ErrorCode, val function: KFunction<*>? = null) {
             ErrorCode.CODE_NOT_FOUND -> R.string.error_no_found
             ErrorCode.CODE_TIMEOUT -> R.string.error_time_out
             ErrorCode.CODE_UNKNOWN_EXCEPTION -> R.string.error_default
+            ErrorCode.CODE_INTERNAL_SERVER_ERROR -> R.string.error_server
             ErrorCode.CODE_NOT_DISPLAY -> return  // Do nothing
         }
 

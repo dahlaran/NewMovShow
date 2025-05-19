@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.JacocoOptions
+import com.android.build.api.dsl.TestCoverage
 
 
 plugins {
@@ -120,11 +122,24 @@ dependencies {
     implementation(libs.coil3.coil.compose)
     implementation(libs.coil.network.okhttp)
 
+    // Testing libraries
+    testImplementation(kotlin("test"))
+    testImplementation(libs.junit)
+
+    debugImplementation(libs.ui.tooling)
+    debugImplementation(libs.ui.test.manifest)
+
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ui.test.junit4)
     androidTestImplementation(platform(libs.compose.bom))
-    debugImplementation(libs.ui.tooling)
-    debugImplementation(libs.ui.test.manifest)
-    testImplementation(libs.junit)
+    testImplementation(libs.turbine)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // Jupiter for unit testing
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+
+    // MockK for Kotlin mocking
+    testImplementation(libs.mockk)
 }
