@@ -1,6 +1,6 @@
 [versions]
 accompanist-swiperefresh = "0.24.2-alpha"
-agp = "8.9.1"
+agp = "8.10.0"
 android-joda = "2.10.9"
 coil-compose = "3.1.0"
 converter-gson = "2.9.0"

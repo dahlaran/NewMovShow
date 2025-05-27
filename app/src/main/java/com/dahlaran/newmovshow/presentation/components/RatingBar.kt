@@ -1,4 +1,4 @@
-package com.dahlaran.newmovshow.presentation.utils
+package com.dahlaran.newmovshow.presentation.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Icon
@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.dahlaran.newmovshow.R
 import kotlin.math.ceil
 import kotlin.math.floor
@@ -57,4 +58,14 @@ fun RatingBar(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun RatingBarPreview(){
+    RatingBar(
+        rating = 4.5,
+        stars = 5,
+        starsColor = Color.Yellow
+    )
 }
