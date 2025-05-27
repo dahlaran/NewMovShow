@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dahlaran.newmovshow.R
 import com.dahlaran.newmovshow.domain.model.Media
-import com.dahlaran.newmovshow.presentation.utils.RatingBar
+import com.dahlaran.newmovshow.presentation.components.RatingBar
 
 @Composable
 fun InfoSection(media: Media?) {

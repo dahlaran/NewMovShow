@@ -1,10 +1,15 @@
-package com.dahlaran.newmovshow.domain.viewmodel
+package com.dahlaran.newmovshow.presentation
 
 import app.cash.turbine.test
 import com.dahlaran.newmovshow.common.data.DataState
+import com.dahlaran.newmovshow.common.data.Error
+import com.dahlaran.newmovshow.common.data.ErrorCode
 import com.dahlaran.newmovshow.domain.model.Media
-import com.dahlaran.newmovshow.domain.use_case.GetMediasUseCase
-import com.dahlaran.newmovshow.domain.use_case.SearchMediaByTitleUseCase
+import com.dahlaran.newmovshow.domain.use_case.AddFavoriteMediaUseCase
+import com.dahlaran.newmovshow.domain.use_case.GetMediaUseCase
+import com.dahlaran.newmovshow.domain.use_case.RemoveFavoriteMediaUseCase
+import com.dahlaran.newmovshow.domain.viewmodel.DetailEvent
+import com.dahlaran.newmovshow.domain.viewmodel.MediaDetailViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -22,19 +27,21 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @ExperimentalCoroutinesApi
-class MediaViewModelTest {
+class MediaDetailViewModelTest {
 
-    private lateinit var viewModel: MediaViewModel
-    private lateinit var getMediasUseCase: GetMediasUseCase
-    private lateinit var searchMediaByTitleUseCase: SearchMediaByTitleUseCase
+    private lateinit var viewModel: MediaDetailViewModel
+    private lateinit var getMediaUseCase: GetMediaUseCase
+    private lateinit var addFavoriteUseCase: AddFavoriteMediaUseCase
+    private lateinit var removeFavoriteUseCase: RemoveFavoriteMediaUseCase
     private val testDispatcher = StandardTestDispatcher()
 
     @BeforeEach
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        getMediasUseCase = mockk()
-        searchMediaByTitleUseCase = mockk()
-        viewModel = MediaViewModel(getMediasUseCase, searchMediaByTitleUseCase)
+        getMediaUseCase = mockk()
+        addFavoriteUseCase = mockk()
+        removeFavoriteUseCase = mockk()
+        viewModel = MediaDetailViewModel(getMediaUseCase, addFavoriteUseCase, removeFavoriteUseCase)
     }
 
     @AfterEach
@@ -43,46 +50,24 @@ class MediaViewModelTest {
     }
 
     @Test
-    fun `when refresh event is triggered, medias are loaded`() = runTest {
-        // Given
-        val fakeMedias = listOf(
-            Media(
-                id = "1",
-                genres = listOf("Drama"),
-                image = "imageUrl",
-                language = "English",
-                title = "Test Show",
-                officialSite = "site",
-                premiered = "2020-01-01",
-                rating = 8.5,
-                runtime = 60,
-                seasons = null,
-                status = "Running",
-                summary = "Test summary",
-                type = "show",
-                updated = 123456,
-                url = "test-url",
-                weight = 100
-            )
-        )
+    fun `ArriveOnMedia event loads media details`() = runTest {
+        val mediaId = "123"
+        val testMedia = createTestMedia(mediaId)
 
-        coEvery { getMediasUseCase.invoke(0) } returns flow {
+        coEvery { getMediaUseCase.invoke(mediaId) } returns flow {
             emit(DataState.Loading(true))
-            emit(DataState.Success(fakeMedias))
+            emit(DataState.Success(testMedia))
             emit(DataState.Loading(false))
         }
 
-        // When
-        viewModel.onEvent(MainEvent.Refresh(""))
+        viewModel.onEvent(DetailEvent.ArriveOnMedia(mediaId))
 
-        // Then
         viewModel.state.test {
             val initialState = awaitItem()
             assertTrue(initialState.isLoading)
 
             val loadedState = awaitItem()
-            assertEquals(fakeMedias, loadedState.medias)
-            assertEquals(1, loadedState.mediaPage)
+            assertEquals(testMedia, loadedState.media)
 
             val finalState = awaitItem()
             assertFalse(finalState.isLoading)
@@ -92,55 +77,125 @@ class MediaViewModelTest {
     }
 
     @Test
-    fun `when search event is triggered, search results are loaded`() = runTest {
-        // Given
-        val searchTitle = "Breaking Bad"
-        val fakeSearchResults = listOf(
-            Media(
-                id = "2",
-                genres = listOf("Drama", "Crime"),
-                image = "imageUrl2",
-                language = "English",
-                title = "Breaking Bad",
-                officialSite = "site2",
-                premiered = "2008-01-20",
-                rating = 9.5,
-                runtime = 45,
-                seasons = null,
-                status = "Ended",
-                summary = "Chemistry teacher turns to crime",
-                type = "show",
-                updated = 789123,
-                url = "test-url2",
-                weight = 98
-            )
-        )
+    fun `AddFavorite event adds media to favorites`() = runTest {
+        val mediaId = "123"
+        val media = createTestMedia(mediaId, false)
+        val favoriteMedia = media.copy(isFavorite = true)
 
-        coEvery { searchMediaByTitleUseCase.invoke(searchTitle, 0) } returns flow {
+        viewModel.onEvent(DetailEvent.ArriveOnMedia(mediaId))
+        coEvery { getMediaUseCase.invoke(mediaId) } returns flow {
+            emit(DataState.Success(media))
+        }
+
+        coEvery { addFavoriteUseCase.invoke(mediaId) } returns flow {
             emit(DataState.Loading(true))
-            emit(DataState.Success(fakeSearchResults))
+            emit(DataState.Success(favoriteMedia))
             emit(DataState.Loading(false))
         }
 
-        // When
-        viewModel.onEvent(MainEvent.Search(searchTitle))
+        viewModel.onEvent(DetailEvent.AddFavorite)
 
-        // Then
         viewModel.state.test {
-            val initialState = awaitItem()
-            assertTrue(initialState.isLoading)
-            assertEquals(searchTitle, initialState.searchQuery)
-            assertEquals(0, initialState.mediaPage)
-            assertTrue(initialState.medias.isEmpty())
-
-            val loadedState = awaitItem()
-            assertEquals(fakeSearchResults, loadedState.medias)
-            assertEquals(1, loadedState.mediaPage)
-
-            val finalState = awaitItem()
-            assertFalse(finalState.isLoading)
+            awaitItem()
+            val updatedState = awaitItem()
+            assertEquals(favoriteMedia, updatedState.media)
+            assertFalse(updatedState.isLoading)
 
             cancelAndIgnoreRemainingEvents()
         }
+    }
+
+    @Test
+    fun `RemoveFavorite event removes media from favorites`() = runTest {
+        val mediaId = "123"
+        val favoriteMedia = createTestMedia(mediaId, true)
+        val regularMedia = favoriteMedia.copy(isFavorite = false)
+
+        coEvery { getMediaUseCase.invoke(mediaId) } returns flow {
+            emit(DataState.Success(favoriteMedia))
+        }
+        viewModel.onEvent(DetailEvent.ArriveOnMedia(mediaId))
+
+        coEvery { removeFavoriteUseCase.invoke(mediaId) } returns flow {
+            emit(DataState.Loading(true))
+            emit(DataState.Success(regularMedia))
+            emit(DataState.Loading(false))
+        }
+
+        viewModel.onEvent(DetailEvent.RemoveFavorite)
+
+        viewModel.state.test {
+            awaitItem()
+            val updatedState = awaitItem()
+            assertEquals(regularMedia, updatedState.media)
+            assertFalse(updatedState.isLoading)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `Refresh event reloads current media`() = runTest {
+        val mediaId = "123"
+        val media = createTestMedia(mediaId)
+
+        coEvery { getMediaUseCase.invoke(mediaId) } returns flow {
+            emit(DataState.Success(media))
+        }
+        viewModel.onEvent(DetailEvent.ArriveOnMedia(mediaId))
+
+        viewModel.onEvent(DetailEvent.Refresh)
+
+        viewModel.state.test {
+            awaitItem()
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `error state is properly handled`() = runTest {
+        val mediaId = "123"
+        val error = Error(ErrorCode.CODE_NETWORK_PROBLEM)
+
+        coEvery { addFavoriteUseCase.invoke(mediaId) } returns flow {
+            emit(DataState.Error(error))
+        }
+
+        coEvery { getMediaUseCase.invoke(mediaId) } returns flow {
+            emit(DataState.Success(createTestMedia(mediaId)))
+        }
+        viewModel.onEvent(DetailEvent.ArriveOnMedia(mediaId))
+
+        viewModel.onEvent(DetailEvent.AddFavorite)
+
+        viewModel.state.test {
+            awaitItem()
+            val errorState = awaitItem()
+            assertEquals(error, errorState.error)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    private fun createTestMedia(id: String, isFavorite: Boolean = false): Media {
+        return Media(
+            id = id,
+            genres = listOf("Drama"),
+            image = "http://example.com/image.jpg",
+            language = "English",
+            title = "Test Show",
+            officialSite = "http://example.com",
+            premiered = "2021-01-01",
+            rating = 8.5,
+            runtime = 60,
+            seasons = null,
+            status = "Running",
+            summary = "Test summary",
+            type = "scripted",
+            updated = 12345678,
+            url = "http://example.com/show",
+            weight = 100,
+            isFavorite = isFavorite
+        )
     }
 }

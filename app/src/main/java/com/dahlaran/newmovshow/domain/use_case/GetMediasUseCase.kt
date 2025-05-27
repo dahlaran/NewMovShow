@@ -20,7 +20,7 @@ class GetMediasUseCase @Inject constructor(
 ) {
 
     /**
-     * Get medias from the repository
+     * Get medias from local and remote resource
      *
      * @param page the page to get
      * @return a flow of DataState<List<Media>>

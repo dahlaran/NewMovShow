@@ -15,7 +15,7 @@ class GetMediaUseCase @Inject constructor(
 ) {
 
     /**
-     * Get specific media from the repository
+     * Get specific media from local and remote source
      *
      * @param mediaId the id of the media to get
      * @return a flow of DataState<Media>
