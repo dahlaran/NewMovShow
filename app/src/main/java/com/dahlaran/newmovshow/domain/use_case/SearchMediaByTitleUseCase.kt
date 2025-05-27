@@ -21,7 +21,7 @@ class SearchMediaByTitleUseCase @Inject constructor(
 ) {
 
     /**
-     * Search medias by title from the repository
+     * Search medias by title
      *
      * @param mediaTitle the title of the media to search
      * @param page the page to get
