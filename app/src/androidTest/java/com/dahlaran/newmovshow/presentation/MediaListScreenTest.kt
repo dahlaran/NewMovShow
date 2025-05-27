@@ -9,12 +9,14 @@ import com.dahlaran.newmovshow.domain.viewmodel.MainEvent
 import com.dahlaran.newmovshow.domain.viewmodel.MediaListState
 import com.dahlaran.newmovshow.presentation.media.MediaListScreenContent
 import com.dahlaran.newmovshow.theme.AppTheme
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class MediaListScreenTest {
 
+    @get:Rule
     val composeTestRule = createComposeRule()
 
     private val testMedias = listOf(

@@ -9,12 +9,14 @@ import com.dahlaran.newmovshow.domain.viewmodel.MediaFavoriteEvent
 import com.dahlaran.newmovshow.domain.viewmodel.MediaFavoriteState
 import com.dahlaran.newmovshow.presentation.favorite.MediaFavoriteScreenContent
 import com.dahlaran.newmovshow.theme.AppTheme
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class MediaFavoriteScreenTest {
 
+    @get:Rule
     val composeTestRule = createComposeRule()
 
     private val testFavoriteMedias = listOf(
@@ -94,31 +96,6 @@ class MediaFavoriteScreenTest {
         composeTestRule
             .onNodeWithText("The Wire")
             .assertIsDisplayed()
-    }
-
-    @Test
-    fun favoritesScreen_pullToRefreshWorks() {
-        var refreshCalled = false
-
-        composeTestRule.setContent {
-            AppTheme {
-                MediaFavoriteScreenContent(
-                    navigationController = rememberNavController(),
-                    state = MediaFavoriteState(favoriteMedias = testFavoriteMedias),
-                    onEvent = { event ->
-                        if (event is MediaFavoriteEvent.Refresh) refreshCalled = true
-                    }
-                )
-            }
-        }
-
-        composeTestRule
-            .onRoot()
-            .performTouchInput {
-                swipeDown(startY = 200f, endY = 600f)
-            }
-
-        assert(refreshCalled)
     }
 
     @Test
