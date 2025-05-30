@@ -1,7 +1,7 @@
 package com.dahlaran.newmovshow.data.remote
 
-import com.dahlaran.newmovshow.data.remote.data.TVMazeMedia
-import com.dahlaran.newmovshow.data.remote.data.TVMazeShow
+import com.dahlaran.newmovshow.data.remote.data.tvmaze.TVMazeMedia
+import com.dahlaran.newmovshow.data.remote.data.tvmaze.TVMazeShow
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -10,7 +10,7 @@ import retrofit2.http.Query
 /**
  * Interface of TVMaze API
  */
-interface TVMazeApiServices {
+interface TVMazeApiService {
 
     /**
      * Get all shows from TVMaze API

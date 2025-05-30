@@ -1,4 +1,4 @@
-package com.dahlaran.newmovshow.data.remote.data
+package com.dahlaran.newmovshow.data.remote.data.tvmaze
 
 data class TVMazeCountry(
     val code: String,

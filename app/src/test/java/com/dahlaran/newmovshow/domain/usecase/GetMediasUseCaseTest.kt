@@ -3,11 +3,10 @@ package com.dahlaran.newmovshow.domain.usecase
 import com.dahlaran.newmovshow.common.data.DataState
 import com.dahlaran.newmovshow.common.data.ErrorCode
 import com.dahlaran.newmovshow.data.local.MediaDatabase
-import com.dahlaran.newmovshow.data.remote.TVMazeApiServices
-import com.dahlaran.newmovshow.data.remote.data.TVMazeMedia
-import com.dahlaran.newmovshow.data.remote.data.TVMazeRating
-import com.dahlaran.newmovshow.data.remote.data.TVMazeSchedule
-import com.dahlaran.newmovshow.data.remote.data.TVMazeShow
+import com.dahlaran.newmovshow.data.remote.TVMazeApiService
+import com.dahlaran.newmovshow.data.remote.data.tvmaze.TVMazeRating
+import com.dahlaran.newmovshow.data.remote.data.tvmaze.TVMazeSchedule
+import com.dahlaran.newmovshow.data.remote.data.tvmaze.TVMazeShow
 import com.dahlaran.newmovshow.domain.model.Media
 import com.dahlaran.newmovshow.domain.use_case.GetMediasUseCase
 import io.mockk.coEvery
@@ -26,7 +25,7 @@ class GetMediasUseCaseTest {
     lateinit var localData: MediaDatabase
 
     @MockK
-    lateinit var remoteData: TVMazeApiServices
+    lateinit var remoteData: TVMazeApiService
 
     @Before
     fun before() {

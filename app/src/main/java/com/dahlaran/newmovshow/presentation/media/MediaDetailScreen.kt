@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
@@ -19,10 +20,12 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -81,69 +84,74 @@ fun MediaDetailScreenContent(
             }
         }
     }
-    SwipeRefresh(state = swipeRefreshState, onRefresh = refreshAction) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface)
-        ) {
-            Column(
+    Scaffold {
+        SwipeRefresh(modifier = Modifier.padding(it),state = swipeRefreshState, onRefresh = refreshAction) {
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
+                    .background(MaterialTheme.colorScheme.surface)
             ) {
-                mediaDetailScreenState.media?.let { media ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight()
-                    ) {
-                        VideoSection(media = media)
-
-                        IconButton(onClick = {
-                            navController.popBackStack()
-                        }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                        }
-
-                        IconButton(
-                            onClick = favoriteAction::invoke,
-                            modifier = Modifier.align(
-                                androidx.compose.ui.Alignment.TopEnd
-                            )
-                        ) {
-                            Icon(
-                                if (media.isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                                contentDescription = "Favorite"
-                            )
-                        }
-
-                        Row(
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    mediaDetailScreenState.media?.let { media ->
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentHeight()
                         ) {
-                            PosterSection(
-                                mediaTitle = media.title, mediaImageUrl = media.image ?: ""
-                            )
+                            VideoSection(media = media)
 
-                            Spacer(modifier = Modifier.width(12.dp))
+                            IconButton(onClick = {
+                                navController.popBackStack()
+                            }) {
+                                Icon(
+                                    Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = "Back"
+                                )
+                            }
 
-                            InfoSection(media = media)
+                            IconButton(
+                                onClick = favoriteAction::invoke,
+                                modifier = Modifier.align(
+                                    Alignment.TopEnd
+                                )
+                            ) {
+                                Icon(
+                                    if (media.isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                                    contentDescription = "Favorite"
+                                )
+                            }
 
-                            Spacer(modifier = Modifier.width(8.dp))
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentHeight()
+                            ) {
+                                PosterSection(
+                                    mediaTitle = media.title, mediaImageUrl = media.image ?: ""
+                                )
+
+                                Spacer(modifier = Modifier.width(12.dp))
+
+                                InfoSection(media = media)
+
+                                Spacer(modifier = Modifier.width(8.dp))
+                            }
+
                         }
-
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    OverviewSection(media = media)
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    media.seasons?.let {
-                        SeasonListSection(seasonList =  it)
                         Spacer(modifier = Modifier.height(16.dp))
+
+                        OverviewSection(media = media)
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        media.seasons?.let {
+                            SeasonListSection(seasonList = it)
+                            Spacer(modifier = Modifier.height(16.dp))
+                        }
                     }
                 }
             }

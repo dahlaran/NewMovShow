@@ -2,9 +2,9 @@ package com.dahlaran.newmovshow.domain.usecase
 
 import com.dahlaran.newmovshow.common.data.DataState
 import com.dahlaran.newmovshow.data.local.MediaDatabase
-import com.dahlaran.newmovshow.data.remote.TVMazeApiServices
-import com.dahlaran.newmovshow.data.remote.data.TVMazeRating
-import com.dahlaran.newmovshow.data.remote.data.TVMazeShow
+import com.dahlaran.newmovshow.data.remote.TVMazeApiService
+import com.dahlaran.newmovshow.data.remote.data.tvmaze.TVMazeRating
+import com.dahlaran.newmovshow.data.remote.data.tvmaze.TVMazeShow
 import com.dahlaran.newmovshow.domain.model.Media
 import com.dahlaran.newmovshow.domain.use_case.GetMediaUseCase
 import io.mockk.coEvery
@@ -20,7 +20,7 @@ import retrofit2.Response
 class GetMediaUseCaseTest {
 
     private lateinit var mediaDatabase: MediaDatabase
-    private lateinit var apiService: TVMazeApiServices
+    private lateinit var apiService: TVMazeApiService
     private lateinit var useCase: GetMediaUseCase
 
     @Before

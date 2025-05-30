@@ -3,7 +3,7 @@ package com.dahlaran.newmovshow.domain.use_case
 import com.dahlaran.newmovshow.common.data.DataState
 import com.dahlaran.newmovshow.common.data.Error
 import com.dahlaran.newmovshow.data.local.MediaDatabase
-import com.dahlaran.newmovshow.data.remote.TVMazeApiServices
+import com.dahlaran.newmovshow.data.remote.RemoteDataSource
 import com.dahlaran.newmovshow.domain.model.Media
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -15,7 +15,7 @@ import javax.inject.Inject
  * @property remoteData the remote data source to use
  */
 class GetMediasUseCase @Inject constructor(
-    private val remoteData: TVMazeApiServices,
+    private val remoteData: RemoteDataSource,
     private val localData: MediaDatabase
 ) {
 
@@ -36,21 +36,18 @@ class GetMediasUseCase @Inject constructor(
 
                 val response = remoteData.getMediaShows(page)
 
-                if (response.body() != null) {
-                    response.body()?.map { item -> item.toMedia() }?.let { newListFromRemote ->
-                        newListFromRemote.forEach { item ->
-                            val tmp = savedData.find { item.id == it.id }
-                            if (tmp != null) {
-                                item.isFavorite = tmp.isFavorite
-                            }
+                if (response is DataState.Success) {
+                    val tempMediaList = response.data
+                    tempMediaList.forEach { item ->
+                        val tmp = savedData.find { item.id == it.id }
+                        if (tmp != null) {
+                            item.isFavorite = tmp.isFavorite
                         }
-                        localData.saveMedias(newListFromRemote)
-                        emit(DataState.Success(newListFromRemote))
-                    } ?: run {
-                        emit(DataState.Error(Error.fromResponseBody(response.errorBody())))
                     }
+                    localData.saveMedias(tempMediaList)
+                    emit(DataState.Success(tempMediaList))
                 } else {
-                    emit(DataState.Error(Error.fromResponseBody(response.errorBody())))
+                    emit(response)
                 }
             } catch (e: Exception) {
                 emit(DataState.Error(Error.fromException(e)))

@@ -1,6 +1,4 @@
-import com.android.build.api.dsl.JacocoOptions
-import com.android.build.api.dsl.TestCoverage
-
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -15,12 +13,16 @@ android {
     namespace = "com.dahlaran.newmovshow"
     compileSdk = 35
 
+    val file = rootProject.file("local.properties")
+    val properties = Properties()
+    properties.load(file.inputStream())
     defaultConfig {
         applicationId = "com.dahlaran.newmovshow"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        targetSdk = 35
+        versionCode = 2
+        versionName = "2.0"
+        buildConfigField("String", "TMDB_API_KEY", "\"${properties.getProperty("tmdb.api.key") ?: ""}\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

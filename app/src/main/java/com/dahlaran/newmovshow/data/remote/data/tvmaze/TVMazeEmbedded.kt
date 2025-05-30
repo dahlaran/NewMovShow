@@ -1,4 +1,4 @@
-package com.dahlaran.newmovshow.data.remote.data
+package com.dahlaran.newmovshow.data.remote.data.tvmaze
 
 import com.dahlaran.newmovshow.domain.model.Episode
 import com.dahlaran.newmovshow.domain.model.Season

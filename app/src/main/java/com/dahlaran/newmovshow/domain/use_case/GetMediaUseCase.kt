@@ -3,14 +3,15 @@ package com.dahlaran.newmovshow.domain.use_case
 import com.dahlaran.newmovshow.common.data.DataState
 import com.dahlaran.newmovshow.common.data.Error
 import com.dahlaran.newmovshow.data.local.MediaDatabase
-import com.dahlaran.newmovshow.data.remote.TVMazeApiServices
+import com.dahlaran.newmovshow.data.remote.RemoteDataSource
+import com.dahlaran.newmovshow.data.remote.TVMazeApiService
 import com.dahlaran.newmovshow.domain.model.Media
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class GetMediaUseCase @Inject constructor(
-    private val remoteData: TVMazeApiServices,
+    private val remoteData: RemoteDataSource,
     private val localData: MediaDatabase
 ) {
 
@@ -26,16 +27,12 @@ class GetMediaUseCase @Inject constructor(
             try {
                 val localMedia = DataState.Success(localData.getMediaById(mediaId))
                 emit(localMedia)
+
                 val response = remoteData.searchMediaById(mediaId)
-                response.body()?.toMedia()?.let { remoteMedia ->
-                    localMedia.data?.let { media ->
-                        remoteMedia.isFavorite = media.isFavorite
-                    }
-                    localData.saveMedia(remoteMedia)
-                    emit(DataState.Success(remoteMedia))
-                } ?: run {
-                    emit(DataState.Error(Error.fromResponseBody(response.errorBody())))
+                if (response is DataState.Success) {
+                    response.data.isFavorite = localMedia.data?.isFavorite == true
                 }
+                emit(response)
             } catch (e: Exception) {
                 emit(DataState.Error(Error.fromException(e)))
             }

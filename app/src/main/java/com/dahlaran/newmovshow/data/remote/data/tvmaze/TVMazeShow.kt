@@ -1,4 +1,4 @@
-package com.dahlaran.newmovshow.data.remote.data
+package com.dahlaran.newmovshow.data.remote.data.tvmaze
 
 import com.dahlaran.newmovshow.domain.model.Media
 import com.google.gson.annotations.SerializedName
