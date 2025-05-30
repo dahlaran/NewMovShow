@@ -3,7 +3,6 @@ package com.dahlaran.newmovshow.data.remote
 import com.dahlaran.newmovshow.BuildConfig
 import com.dahlaran.newmovshow.data.remote.data.tmdb.TMDbMovie
 import com.dahlaran.newmovshow.data.remote.data.tmdb.TMDbMovieResponse
-import com.dahlaran.newmovshow.data.remote.data.tmdb.TMDbMultiSearchResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -18,20 +17,13 @@ interface TMDbApiService {
         @Query("language") language: String = "en-US"
     ): Response<TMDbMovieResponse>
 
-    @GET("movie/top_rated")
-    suspend fun getTopRatedMovies(
-        @Query("api_key") apiKey: String,
-        @Query("page") page: Int = 1,
-        @Query("language") language: String = "en-US"
-    ): Response<TMDbMovieResponse>
-
-    @GET("search/multi")
-    suspend fun searchMulti(
+    @GET("search/movie")
+    suspend fun searchMovie(
         @Query("api_key") apiKey: String,
         @Query("query") title: String,
         @Query("page") page: Int = 1,
         @Query("language") language: String = "en-US"
-    ): Response<TMDbMultiSearchResponse>
+    ): Response<TMDbMovieResponse>
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(

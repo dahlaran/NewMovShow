@@ -1,6 +1,5 @@
 package com.dahlaran.newmovshow.data.remote
 
-import android.util.Log
 import com.dahlaran.newmovshow.BuildConfig
 import com.dahlaran.newmovshow.common.data.DataState
 import com.dahlaran.newmovshow.common.data.Error
@@ -11,7 +10,6 @@ import com.dahlaran.newmovshow.data.remote.data.tvmaze.TVMazeShow
 import com.dahlaran.newmovshow.domain.model.DataSource
 import com.dahlaran.newmovshow.domain.model.DataSourceConfig
 import com.dahlaran.newmovshow.domain.model.Media
-import timber.log.Timber
 
 class RemoteDataSourceImpl(
     private val tvMazeApiService: TVMazeApiService,
@@ -21,7 +19,11 @@ class RemoteDataSourceImpl(
     override suspend fun getMediaShows(page: Int): DataState<List<Media>> {
         return try {
             val response = when (DataSourceConfig.currentSource) {
-                DataSource.TMDB -> tmDbApiService.getPopularMovies(apiKey = BuildConfig.TMDB_API_KEY, page = page)
+                DataSource.TMDB -> tmDbApiService.getPopularMovies(
+                    apiKey = BuildConfig.TMDB_API_KEY,
+                    page = page
+                )
+
                 DataSource.TVMAZE -> tvMazeApiService.getMediaShows(page = page)
             }
             if (response.isSuccessful) {
@@ -47,7 +49,11 @@ class RemoteDataSourceImpl(
     override suspend fun searchMediaById(id: String): DataState<Media> {
         return try {
             val response = when (DataSourceConfig.currentSource) {
-                DataSource.TMDB -> tmDbApiService.getMovieDetails(apiKey = BuildConfig.TMDB_API_KEY, id = id)
+                DataSource.TMDB -> tmDbApiService.getMovieDetails(
+                    apiKey = BuildConfig.TMDB_API_KEY,
+                    id = id
+                )
+
                 DataSource.TVMAZE -> tvMazeApiService.searchMediaById(id = id)
             }
             if (response.isSuccessful) {
@@ -70,7 +76,11 @@ class RemoteDataSourceImpl(
     override suspend fun searchMediaByTitle(title: String): DataState<List<Media>> {
         return try {
             val response = when (DataSourceConfig.currentSource) {
-                DataSource.TMDB -> tmDbApiService.searchMulti(apiKey = BuildConfig.TMDB_API_KEY, title = title)
+                DataSource.TMDB -> tmDbApiService.searchMovie(
+                    apiKey = BuildConfig.TMDB_API_KEY,
+                    title = title
+                )
+
                 DataSource.TVMAZE -> tvMazeApiService.searchMediaByTitle(title = title)
             }
             if (response.isSuccessful) {
