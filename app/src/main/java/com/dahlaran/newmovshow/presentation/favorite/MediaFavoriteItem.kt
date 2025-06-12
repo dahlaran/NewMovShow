@@ -50,16 +50,6 @@ fun MediaFavoriteItem(
                     .fillMaxSize()
                     .clip(RoundedCornerShape(8.dp))
             )
-
-            Text(
-                modifier = Modifier
-                    .padding(12.dp)
-                    .align(Alignment.BottomCenter),
-                text = media.title,
-                style = MaterialTheme.typography.titleMedium,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
         }
     }
 }

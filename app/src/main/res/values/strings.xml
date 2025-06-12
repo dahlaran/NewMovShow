@@ -47,4 +47,5 @@
     <string name="error_no_found">No Found</string>
     <string name="error_time_out">Time out</string>
     <string name="error_server">Error Server</string>
+    <string name="error_opening_video">An error occured, cannot load the video</string>
 </resources>

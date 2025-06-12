@@ -29,6 +29,7 @@ interface TMDbApiService {
     suspend fun getMovieDetails(
         @Path("movie_id") id: String,
         @Query("api_key") apiKey: String,
-        @Query("language") language: String = "en-US"
+        @Query("language") language: String = "en-US",
+        @Query("append_to_response") appendToResponse: String = "videos"
     ): Response<TMDbMovie>
 }

@@ -4,6 +4,7 @@ agp = "8.10.1"
 android-joda = "2.10.9"
 coil-compose = "3.1.0"
 converter-gson = "2.9.0"
+core = "12.1.0"
 hilt-android = "2.49"
 hilt-navigation-compose = "1.2.0"
 junit-jupiter-api = "5.8.2"
@@ -51,6 +52,7 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil-compose" }
 coil3-coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil-compose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converter-gson" }
+youtube = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "core" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android" }

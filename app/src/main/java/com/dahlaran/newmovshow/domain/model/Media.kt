@@ -26,7 +26,8 @@ data class Media(
     val updated: Int,
     val url: String,
     val weight: Int,
-    var isFavorite: Boolean = false
+    var isFavorite: Boolean = false,
+    val video: VideoInfo? = null,
 ) {
 
     fun getSummaryToDisplay(): String {

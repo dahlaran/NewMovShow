@@ -8,7 +8,7 @@ import com.dahlaran.newmovshow.domain.model.Media
 /**
  * AppDatabase is the room database for the app
  */
-@Database(entities = [Media::class], version = 2, exportSchema = false)
+@Database(entities = [Media::class], version = 3, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun mediaDao(): MediaDao

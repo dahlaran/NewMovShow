@@ -124,6 +124,9 @@ dependencies {
     implementation(libs.coil3.coil.compose)
     implementation(libs.coil.network.okhttp)
 
+    // YouTube Player API
+    implementation(libs.youtube)
+
     // Testing libraries
     testImplementation(kotlin("test"))
     testImplementation(libs.junit)

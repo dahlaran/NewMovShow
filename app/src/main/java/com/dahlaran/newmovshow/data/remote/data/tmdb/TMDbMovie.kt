@@ -20,7 +20,7 @@ import com.google.gson.annotations.SerializedName
  * @property originalLanguage The original language of the movie.
  * @property originalTitle The original title of the movie.
  * @property popularity The popularity score of the movie.
- * @property video Indicates whether the movie is a video.
+ * @property videos A response containing video information related to the movie.
  */
 data class TMDbMovie(
     val id: Int,
@@ -31,12 +31,12 @@ data class TMDbMovie(
     @SerializedName("release_date") val releaseDate: String?,
     @SerializedName("vote_average") val voteAverage: Double,
     @SerializedName("vote_count") val voteCount: Int,
-    @SerializedName("genre_ids") val genreIds: List<Int>,
+    val genres: List<TMDbGenre>,
     val adult: Boolean,
     @SerializedName("original_language") val originalLanguage: String,
     @SerializedName("original_title") val originalTitle: String,
     val popularity: Double,
-    val video: Boolean
+    val videos: TMDbVideosResponse?
 ) {
 
     /**
@@ -47,7 +47,7 @@ data class TMDbMovie(
     fun toMedia(): Media {
         return Media(
             id = "$id",
-            genres = genreIds.map { getGenreName(it) },
+            genres = genres.map { it.name },
             image = posterPath?.let { "https://image.tmdb.org/t/p/w500$it" },
             language = originalLanguage,
             title = title,
@@ -61,32 +61,8 @@ data class TMDbMovie(
             type = "Movie",
             updated = 0,
             url = "https://www.themoviedb.org/movie/$id",
-            weight = popularity.toInt()
+            weight = popularity.toInt(),
+            video = videos?.getBestTrailer()
         )
-    }
-
-    private fun getGenreName(genreId: Int): String {
-        return when (genreId) {
-            28 -> "Action"
-            12 -> "Adventure"
-            16 -> "Animation"
-            35 -> "Comedy"
-            80 -> "Crime"
-            99 -> "Documentary"
-            18 -> "Drama"
-            10751 -> "Family"
-            14 -> "Fantasy"
-            36 -> "History"
-            27 -> "Horror"
-            10402 -> "Music"
-            9648 -> "Mystery"
-            10749 -> "Romance"
-            878 -> "Science Fiction"
-            10770 -> "TV Movie"
-            53 -> "Thriller"
-            10752 -> "War"
-            37 -> "Western"
-            else -> "Unknown"
-        }
     }
 }
